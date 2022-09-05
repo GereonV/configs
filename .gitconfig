@@ -1,0 +1,7 @@
+[user]
+	email = 72784429+GereonV@users.noreply.github.com
+	name = Gereon V
+[core]
+	editor = vim
+[alias]
+	l = log --all --oneline --graph
