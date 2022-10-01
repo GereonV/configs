@@ -186,5 +186,6 @@ exec --no-startup-id "~/.screenlayout/autoxrandr.sh && xwallpaper --zoom ~/Pictu
 # finds out, if available)
 bar {
         status_command i3blocks
+	tray_output primary
 	font pango:monospace 15
 }
