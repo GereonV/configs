@@ -11,12 +11,17 @@ separator=true
 separator_block_width=15
 
 [shutdown]
-full_text=Shutdown
+full_text=S
 command=shutdown now
-color=#ff00ff
+color=#ff0000
+
+[reboot]
+full_text=R
+command=reboot
+color=#6699ff
 
 [exit]
-full_text=Exit i3
+full_text=E
 command=i3-msg -q exit
 color=#ffff00
 
@@ -24,13 +29,7 @@ color=#ffff00
 full_text=Documentation
 website=https://vivien.github.io/i3blocks
 command=xdg-open "$website"
-color=#f12711
-
-[scripts]
-full_text=i3blocks scripts
-website=https://github.com/vivien/i3blocks-contrib
-command=xdg-open "$website"
-color=#6699ff
+color=#aa33cc
 
 [volume]
 command=pactl get-sink-volume @DEFAULT_SINK@ | grep -o ..% | awk 'NR == 1 || /{ print $1 }/'
