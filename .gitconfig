@@ -5,3 +5,5 @@
 	editor = vim
 [alias]
 	l = log --all --oneline --graph
+[init]
+	defaultBranch = master
