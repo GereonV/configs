@@ -197,7 +197,7 @@ bindsym XF86AudioPrevious exec previouserctl previous
 assign [class="discord"] $ws3
 assign [class="Code"] $ws4
 
-# for_window [class=".*"] border pixel 2
+for_window [class=".*"] border pixel 0
 gaps inner 15
 # only enable gaps with multiple container
 smart_gaps on
