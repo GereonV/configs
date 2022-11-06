@@ -192,7 +192,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Use playerctl to control media players
 bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrevious exec previouserctl previous
+bindsym XF86AudioPrevious exec playerctl previous
 
 assign [class="discord"] $ws3
 assign [class="Code"] $ws4
