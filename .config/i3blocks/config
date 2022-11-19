@@ -32,7 +32,7 @@ command=xdg-open "$website"
 color=#aa33cc
 
 [volume]
-command=pactl get-sink-volume @DEFAULT_SINK@ | grep -o ..% | awk 'NR == 1 || /{ print $1 }/'
+command=pactl get-sink-volume @DEFAULT_SINK@ | grep -o "[0-9]*%" | awk 'NR == 1 || /{ print $1 }/'
 min_width=50
 align=center
 interval=once
