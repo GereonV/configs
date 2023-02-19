@@ -36,6 +36,9 @@ nnoremap J mzJ`z
 nnoremap <Space>J J
 
 " Visual Mode
+vnoremap S "_s
+vnoremap D "_d
+vnoremap C "_c
 vnoremap P "_dP
 
 " Normal + Visual Mode
