@@ -30,8 +30,8 @@ nnoremap <C-d> <C-d>zz
 nnoremap <C-u> <C-u>zz
 nnoremap n nzz
 nnoremap N Nzz
-nnoremap ä o<Esc>k
-nnoremap Ä O<Esc>j
+nnoremap ä o<Esc>0"_Dk
+nnoremap Ä O<Esc>0"_Dj
 nnoremap J mzJ`z
 nnoremap <Space>J J
 
@@ -54,3 +54,6 @@ nnoremap <Space>c "+c
 vnoremap <Space>c "+c
 nnoremap <Space>p "+p
 vnoremap <Space>p "+p
+
+" Normal, Visual and Operator Mode
+noremap <Space><Space> :let @"=@0<Enter>
