@@ -1,8 +1,16 @@
 " Quality of Life
-set si nu rnu so=10 " smartindent, number, relativenumber, scrolloff
+set nu rnu so=10 " number, relativenumber, scrolloff
 map <Space> <nop>
 map + <nop>
 map - <nop>
+
+" Indenting & Alignment
+set noet ci ai si sta " noexpandtab, copyindent, autoindent, smartindent, smarttab
+set ts=8 sw=0 sts=0 " tabstop, shiftwidth, softtabstop
+set lcs=tab:▷▷⋮,lead:.,trail:. " listchars
+nnoremap <expr><silent><F3> ':<C-u>set invlist<CR>'..v:count1
+inoremap <silent><F3> <Esc>:set invlist<CR>a
+vnoremap <silent><F3> :<C-u>set invlist<CR>gv
 
 " Highlighting
 filetype plugin indent on
