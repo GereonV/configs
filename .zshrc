@@ -16,3 +16,7 @@ export PATH="/usr/local/jdk/bin:${PATH}"
 export C_INCLUDE_PATH="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/"
 export CPLUS_INCLUDE_PATH="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/"
 export LIBRARY_PATH="${LIBRARY_PATH}:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib"
+
+cdmk() {
+	mkdir -p $1 && cd $1
+}

@@ -198,6 +198,7 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 assign [class="discord"] $ws3
+assign [class="Signal"] $ws3
 assign [class="Code"] $ws4
 
 for_window [class=".*"] border pixel 0

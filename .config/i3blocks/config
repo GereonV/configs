@@ -25,6 +25,14 @@ full_text=E
 command=i3-msg -q exit
 color=#ffff00
 
+[US]
+full_text=US
+command=setxkbmap us
+
+[DE]
+full_text=DE
+command=setxkbmap de
+
 [documentation]
 full_text=Documentation
 website=https://vivien.github.io/i3blocks

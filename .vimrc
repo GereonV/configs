@@ -92,3 +92,30 @@ nnoremap gJ @='mzgJ`z'<CR>
 nnoremap <Space>J J
 nnoremap <Space>gJ gJ
 nnoremap g<Space>J gJ
+
+nnoremap gd :LspDefinition<CR>
+nnoremap gn :LspRename<CR>
+
+if executable('clangd')
+	au User lsp_setup call lsp#register_server({
+	\	'name': 'clangd',
+	\	'cmd': {server_info->['clangd']},
+	\	'allowlist': ['c', 'cpp'],
+	\ })
+endif
+
+if executable('rust-analzer')
+	au User lsp_setup call lsp#register_server({
+	\	'name': 'rust-analyzer',
+	\	'cmd': {server_info->['rust-analyzer']},
+	\	'allowlist': ['rust'],
+	\ })
+endif
+
+if executable('zls')
+	au User lsp_setup call lsp#register_server({
+	\	'name': 'zls',
+	\	'cmd': {server_info->['zls']},
+	\	'allowlist': ['zig'],
+	\ })
+endif
