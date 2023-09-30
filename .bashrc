@@ -8,6 +8,6 @@
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
-cdmk() {
+mkcd() {
 	mkdir -p $1 && cd $1
 }
