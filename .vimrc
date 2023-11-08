@@ -15,6 +15,7 @@ vnoremap <silent><F3> :<C-u>set invlist<CR>gv
 " Highlighting
 filetype plugin indent on
 syntax on
+set ic scs " ignorecase, smartcase
 set is hls " incsearch, hlsearch
 nohls
 map <silent>Q :<C-u>nohls<CR>
@@ -104,7 +105,7 @@ if executable('clangd')
 	\ })
 endif
 
-if executable('rust-analzer')
+if executable('rust-analyzer')
 	au User lsp_setup call lsp#register_server({
 	\	'name': 'rust-analyzer',
 	\	'cmd': {server_info->['rust-analyzer']},
@@ -117,5 +118,13 @@ if executable('zls')
 	\	'name': 'zls',
 	\	'cmd': {server_info->['zls']},
 	\	'allowlist': ['zig'],
+	\ })
+endif
+
+if executable('pylsp')
+	au User lsp_setup call lsp#register_server({
+	\	'name': 'pylsp',
+	\	'cmd': {server_info->['pylsp']},
+	\	'allowlist': ['python'],
 	\ })
 endif
