@@ -5,5 +5,12 @@
 	editor = vim
 [alias]
 	l = log --all --oneline --graph
+	pushf = push --force-with-lease
 [init]
 	defaultBranch = master
+[merge]
+	tool = vimdiff
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
