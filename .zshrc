@@ -1,21 +1,15 @@
-if [ -e /usr/local/etc/user.zprofile ]
-then
-    source /usr/local/etc/user.zprofile
-fi
-
+set -o vi
 ssh-add --apple-load-keychain 2> /dev/null
+export TROOM="dv642098@troom1gw.zam.kfa-juelich.de"
+export PROMPT="%B%{%F{black}%}%n@%m%{%f%}%b %{%F{blue}%}%~ %{%f%}%% "
 
 alias top="top -o cpu"
 alias ll="ls -al"
 alias lt="ls -alrt"
+alias ingo="rm -rf"
 alias python="python3"
 alias rl=". $HOME/.zshrc"
-alias st="ssh dv642098@troom1gw.zam.kfa-juelich.de"
-export TROOM="dv642098@troom1gw.zam.kfa-juelich.de"
-export PATH="/usr/local/jdk/bin:$HOME/Library/Python/3.11/bin/:$HOME/.cargo/bin/:${PATH}"
-export C_INCLUDE_PATH="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/"
-export CPLUS_INCLUDE_PATH="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/"
-export LIBRARY_PATH="${LIBRARY_PATH}:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib"
+alias st="ssh ${TROOM}"
 
 mkcd() {
 	mkdir -p $1 && cd $1
