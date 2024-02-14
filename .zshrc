@@ -16,6 +16,12 @@ git_prompt_string() {
 	[[ ${bits} ]] && echo " (${bits} ${branch})" || echo " (${branch})"
 }
 
+if type brew &>/dev/null; then
+	FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+	autoload -Uz compinit
+	compinit
+fi
+
 set -o vi
 ssh-add --apple-load-keychain 2> /dev/null
 export TROOM="dv642098@troom1gw.zam.kfa-juelich.de"
@@ -29,6 +35,7 @@ alias ingo="rm -rf"
 alias python="python3"
 alias rl=". $HOME/.zshrc"
 alias st="ssh ${TROOM}"
+alias lg="lazygit"
 
 mkcd() {
 	mkdir -p $1 && cd $1
