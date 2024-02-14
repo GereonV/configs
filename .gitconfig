@@ -1,15 +1,16 @@
 [user]
 	email = 72784429+GereonV@users.noreply.github.com
 	name = Gereon V
+	signingKey = ~/.ssh/id_ed25519.pub
 [core]
-	editor = vim
+	editor = nvim
 [alias]
 	l = log --all --oneline --graph
 	pushf = push --force-with-lease
 [init]
 	defaultBranch = master
 [merge]
-	tool = vimdiff
+	tool = nvimdiff
 [gpg]
 	format = ssh
 [commit]
