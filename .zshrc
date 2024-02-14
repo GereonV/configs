@@ -16,16 +16,11 @@ git_prompt_string() {
 	[[ ${bits} ]] && echo " (${bits} ${branch})" || echo " (${branch})"
 }
 
-if type brew &>/dev/null; then
-	FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-	autoload -Uz compinit
-	compinit
-fi
-
 set -o vi
 ssh-add --apple-load-keychain 2> /dev/null
 export TROOM="dv642098@troom1gw.zam.kfa-juelich.de"
 export PROMPT='$(ret_prompt_string) %F{green}%n%f@%F{magenta}%m%f:%F{magenta}%~%F{yellow}$(git_prompt_string)%f $ '
+[[ -x powerline-shell ]] && PROMPT='$(powerline-shell --shell zsh $?)'
 setopt PROMPT_SUBST
 
 alias top="top -o cpu"
@@ -36,7 +31,19 @@ alias python="python3"
 alias rl=". $HOME/.zshrc"
 alias st="ssh ${TROOM}"
 alias lg="lazygit"
+alias rg="ripgrep"
 
 mkcd() {
 	mkdir -p $1 && cd $1
 }
+
+if type brew &>/dev/null; then
+	FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+	autoload -Uz compinit
+	compinit
+fi
+if [[ -x /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]]
+then
+	. /opt/homebrew/opt/fzf/shell/key-bindings.zsh
+	. /opt/homebrew/opt/fzf/shell/completion.zsh
+fi
