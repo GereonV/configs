@@ -20,7 +20,7 @@ set -o vi
 ssh-add --apple-load-keychain 2> /dev/null
 export TROOM="dv642098@troom1gw.zam.kfa-juelich.de"
 export PROMPT='$(ret_prompt_string) %F{green}%n%f@%F{magenta}%m%f:%F{magenta}%~%F{yellow}$(git_prompt_string)%f $ '
-[[ -x powerline-shell ]] && PROMPT='$(powerline-shell --shell zsh $?)'
+type powerline-shell &> /dev/null && PROMPT='$(powerline-shell --shell zsh $?)'
 setopt PROMPT_SUBST
 
 alias top="top -o cpu"
