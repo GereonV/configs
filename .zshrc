@@ -31,14 +31,14 @@ alias python="python3"
 alias rl=". $HOME/.zshrc"
 alias st="ssh ${TROOM}"
 alias lg="lazygit"
-alias rg="ripgrep"
+alias nv="nvim"
 
 mkcd() {
 	mkdir -p $1 && cd $1
 }
 
 if type brew &>/dev/null; then
-	FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  	FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 	autoload -Uz compinit
 	compinit
 fi
@@ -47,3 +47,6 @@ then
 	. /opt/homebrew/opt/fzf/shell/key-bindings.zsh
 	. /opt/homebrew/opt/fzf/shell/completion.zsh
 fi
+export FZF_DEFAULT_COMMAND="fd --unrestricted --follow --strip-cwd-prefix --exclude .git --exclude node_modules --exclude '*.pyc'"
+export FZF_CTRL_T_COMMAND=${FZF_DEFAULT_COMMAND}
+export FZF_ALT_C_COMMAND="fd --type d --unrestricted --follow --strip-cwd-prefix --exclude .git --exclude node_modules --exclude '*.pyc'"
