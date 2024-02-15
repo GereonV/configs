@@ -48,6 +48,6 @@ then
 	. /opt/homebrew/opt/fzf/shell/key-bindings.zsh
 	. /opt/homebrew/opt/fzf/shell/completion.zsh
 fi
-export FZF_DEFAULT_COMMAND="fd --unrestricted --follow --strip-cwd-prefix --exclude .git --exclude node_modules --exclude '*.pyc'"
-export FZF_CTRL_T_COMMAND=${FZF_DEFAULT_COMMAND}
-export FZF_ALT_C_COMMAND="fd --type d --unrestricted --follow --strip-cwd-prefix --exclude .git --exclude node_modules --exclude '*.pyc'"
+export FZF_DEFAULT_COMMAND="fd --unrestricted --follow --exclude .git --exclude node_modules --exclude '*.pyc' . ~"
+export FZF_CTRL_T_COMMAND="fd --unrestricted --follow --strip-cwd-prefix --exclude .git --exclude node_modules --exclude '*.pyc'"
+export FZF_ALT_C_COMMAND="fd --type d --unrestricted --follow --exclude .git --exclude node_modules --exclude '*.pyc' . ~"
