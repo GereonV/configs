@@ -37,12 +37,13 @@ mkcd() {
 	mkdir -p $1 && cd $1
 }
 
-if type brew &>/dev/null; then
+if type brew &> /dev/null
+then
   	FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 	autoload -Uz compinit
 	compinit
 fi
-if [[ -x /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]]
+if [[ -r /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]]
 then
 	. /opt/homebrew/opt/fzf/shell/key-bindings.zsh
 	. /opt/homebrew/opt/fzf/shell/completion.zsh
