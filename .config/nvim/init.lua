@@ -1,3 +1,8 @@
+vim.cmd.colorscheme("evening")
+vim.cmd.highlight("link EndOfBuffer Pmenu")
+
+-- lazy.nvim {{{
+-- lazypath {{{
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system {
@@ -11,7 +16,8 @@ if not vim.loop.fs_stat(lazypath) then
   }
 end
 vim.opt.rtp:prepend(lazypath)
-vim.cmd.colorscheme("default")
+-- }}}
+-- setup {{{
 require("lazy").setup {
   "folke/neodev.nvim",               -- LSP setup for nvim config
   "neovim/nvim-lspconfig",           -- LSP defaults
@@ -38,58 +44,9 @@ require("lazy").setup {
     },
   },
 }
-
-vim.keymap.set("n", "<leader>lg", ":LazyGit<CR>", {})
-
-local cmp = require("cmp")
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert {
-    ["<C-n>"] = function()
-      if not cmp.visible() then cmp.complete() end
-      cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-    end,
-    ["<C-p>"] = function()
-      if not cmp.visible() then cmp.complete() end
-      cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-    end,
-    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-e>"] = cmp.mapping.abort(),        -- stop completion
-    ["<C-Space>"] = cmp.mapping.complete(), -- restart completion
-    ["<CR>"] = cmp.mapping.confirm {
-      select = true                         -- `select = false` -> only confirm explicitly selected items.
-    },
-  },
-  sources = {
-    { name = "calc" },
-    { name = "vsnip" },
-    { name = "nvim_lsp" },
-    { name = "path" },
-  },
-}
-cmp.setup.cmdline(":", {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = "path" },
-    { name = "cmdline" },
-  },
-})
-local cmp_buffer = require("cmp_buffer")
-cmp.setup.cmdline({ "/", "?" }, {
-  sources = { { name = "buffer" } },
-  sorting = {
-    priority_weight = 2, -- arbitrary value  from defaults
-    comparators = {
-      function(...) cmp_buffer:compare_locality(...) end,
-    }
-  },
-})
-
+-- }}}
+-- }}}
+-- telescope {{{
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
 vim.keymap.set("n", "<leader>fo", builtin.oldfiles, {})
@@ -99,14 +56,17 @@ vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
 vim.keymap.set("n", "<leader>fm", builtin.man_pages, {})
 vim.keymap.set("n", "<leader>ft", builtin.builtin, {})
-
+-- }}}
+-- LSP {{{
+-- register servers {{{
 require("neodev").setup {} -- ABOVE! lspconfig
 local lspconfig = require("lspconfig")
 local lsp_opts = { capabilities = require("cmp_nvim_lsp").default_capabilities() }
 lspconfig.clangd.setup(lsp_opts)
 lspconfig.rust_analyzer.setup(lsp_opts)
 lspconfig.lua_ls.setup(lsp_opts)
-
+-- }}}
+-- mappings {{{
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
   callback = function(event)
@@ -132,3 +92,68 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end, opts)
   end,
 })
+-- }}}
+-- }}}
+-- cmp (autocompletion) {{{
+local cmp = require("cmp")
+local cmp_buffer = require("cmp_buffer")
+-- setup (sources & mappings) {{{
+local function cmp_next()
+  if not cmp.visible() then cmp.complete() end
+  cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
+end
+local function cmp_prev()
+  if not cmp.visible() then cmp.complete() end
+  cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
+end
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert {
+    ["<C-i>"] = cmp_next,
+    ["<C-n>"] = cmp_next,
+    ["<C-p>"] = cmp_prev,
+    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-e>"] = cmp.mapping.abort(),        -- stop completion
+    ["<C-Space>"] = cmp.mapping.complete(), -- restart completion
+    ["<CR>"] = cmp.mapping.confirm {
+      select = true                         -- `select = false` -> only confirm explicitly selected items.
+    },
+  },
+  sources = {
+    { name = "calc" },
+    { name = "vsnip" },
+    { name = "nvim_lsp" },
+    { name = "path" },
+  },
+}
+-- }}}
+-- setup cmdline {{{
+cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = "path" },
+    { name = "cmdline" },
+  },
+})
+-- }}}
+-- setup cmdline search {{{
+cmp.setup.cmdline({ "/", "?" }, {
+  sources = { { name = "buffer" } },
+  sorting = {
+    priority_weight = 2, -- arbitrary value  from defaults
+    comparators = {
+      function(...) cmp_buffer:compare_locality(...) end,
+    }
+  },
+})
+-- }}}
+-- }}}
+-- lazygit {{{
+local lazygit = require("lazygit")
+vim.keymap.set("n", "<leader>lg", lazygit.lazygit, {})
+-- }}}
