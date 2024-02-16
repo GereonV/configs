@@ -211,10 +211,26 @@ require("telescope").setup {
   defaults = {
     prompt_prefix = "🔍  ",
   },
+  extensions = {
+    file_browser = {
+      prompt_path = true,
+      hidden = true,
+      no_ignore = true,
+    },
+  },
 }
+local telescope = require("telescope")
 local builtin = require("telescope.builtin")
+local file_browser = telescope.load_extension("file_browser")
+local function browse_home()
+  file_browser.file_browser {
+    path = "~",
+  }
+end
 vim.keymap.set("n", "<Leader>ff", builtin.find_files, {})
 vim.keymap.set("n", "<Leader>fo", builtin.oldfiles, {})
+vim.keymap.set("n", "<Leader>fd", file_browser.file_browser, {})
+vim.keymap.set("n", "<Leader>fa", browse_home, {})
 vim.keymap.set("n", "<Leader>fg", builtin.live_grep, {})
 vim.keymap.set("n", "<Leader>fs", builtin.grep_string, {})
 vim.keymap.set("n", "<Leader>fb", builtin.buffers, {})
