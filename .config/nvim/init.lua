@@ -69,18 +69,63 @@ vim.keymap.set("v", "+", '"zy/\\C<C-r>z<CR>', {})
 -- vim.keymap.set("v", "-", '"zy?\\C<C-r>z<CR>', {})
 -- }}}
 -- indenting {{{
--- +-------------+------+---------+
--- | variable    | type | meaning |
--- +=============+======+=========+
--- | autoindent  | bool |         |
--- | copyindent  | bool |         |
--- | smartindent | bool |         |
--- | expandtab   | bool |         |
--- | smarttab    | bool |         |
--- | tabstop     | int  |         |
--- | shiftwidth  | int  |         |
--- | softtabstop | int  |         |
--- +-------------+------+---------+
+-- +----------+---------------+--------+---------+----------------------------------------------------------+
+-- | priority | variable/mode | type   | default | description                                              |
+-- +==========+===============+========+=========+==========================================================+
+-- | 1        | autoindent    | bool   | on      | copy indentation of previous line to new line            |
+-- | 1        | smartindent   | bool   | off     | "smartly" adds extra indentation to new line             |
+-- | 2        | cindent       | bool   | off     | configurable version of smartindent for C-style programs |
+-- | 3        | indentexpr    | string | ""      | expression that evaluates to indent of line              |
+-- +----------+---------------+--------+---------+----------------------------------------------------------+
+--
+-- +----------------+------+---------+-----------------------------------------------------------------------+
+-- | variable       | type | default | meaning                                                               |
+-- +================+======+=========+=======================================================================+
+-- | tabstop        | int  | 8       | how many spaces make up a <TAB> character                             |
+-- +----------------+------+---------+-----------------------------------------------------------------------+
+-- | softtabstop    | int  | 0       | if != 0, how many visual spaces a <TAB>/<BS> press accounts for       |
+-- +----------------+------+---------+-----------------------------------------------------------------------+
+-- | smarttab       | bool | on      | shift start of line using shiftwidth (ie. not tabstop or softtabstop) |
+-- | shiftwidth     | int  | 8       | number of spaces to indent each step with                             |
+-- |                |      |         | if == 0, uses tabstop                                                 |
+-- | shiftround     | bool | off     | round indent to multiples of shiftwidth                               |
+-- +----------------+------+---------+-----------------------------------------------------------------------+
+-- | expandtab      | bool | off     | always use spaces instead of eagerly collapsing to tab characters     |
+-- +----------------+------+---------+-----------------------------------------------------------------------+
+-- | copyindent     | bool | off     | use indenting characters from previous line for same indentation      |
+-- |                |      |         | ie. prevent reconstructing indentation with usual rules               |
+-- |                |      |         | greater indentation is accomplished by adding usual characters        |
+-- +----------------+------+---------+-----------------------------------------------------------------------+
+-- | preserveindent | bool | off     | preserve indenting structure and characters when changing indentation |
+-- +----------------+------+---------+-----------------------------------------------------------------------+
+--
+-- cindent {{{
+-- +---------------+--------+------------------------------------------------------+
+-- | variable      | type   | meaning                                              |
+-- +===============+========+======================================================+
+-- | cinkeys       | string | insert mode reindenting triggers (:h cinkeys-format) |
+-- +---------------+--------+------------------------------------------------------+
+-- | cinoptions    | string | specifies preferred style (:h cinoptions-values)     |
+-- +---------------+--------+------------------------------------------------------+
+-- | cinwords      | string | words that start extra indentation on the next line  |
+-- |               |        | case-sensitive                                       |
+-- |               |        | only done at "appropiate places" (eg. inside `{}`)   |
+-- +---------------+--------+------------------------------------------------------+
+-- | cinscopedecls | string | "public,protected,private"                           |
+-- +---------------+--------+------------------------------------------------------+
+-- }}}
+-- smartindent {{{
+-- +----------+--------+-----------------------------------------------------+
+-- | variable | type   | meaning                                             |
+-- +==========+========+=====================================================+
+-- | cinwords | string | words that start extra indentation on the next line |
+-- |          |        | case-sensitive                                      |
+-- +----------+--------+-----------------------------------------------------+
+-- }}}
+vim.opt.smartindent = true
+vim.opt.shiftwidth = 4
+vim.opt.shiftround = true
+vim.opt.copyindent = false
 -- }}}
 -- }}}
 -- lazy.nvim {{{
