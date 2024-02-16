@@ -1,7 +1,8 @@
 -- vim: foldmethod=marker
 -- vim options {{{
 vim.opt.lazyredraw = true
-vim.opt.signcolumn = "number"
+vim.keymap.set("", "+", "", {})
+vim.keymap.set("", "-", "", {})
 -- visual {{{
 vim.cmd.colorscheme("evening")
 vim.cmd.highlight("link EndOfBuffer Pmenu")
@@ -12,23 +13,40 @@ vim.opt.showbreak = "↪ "
 vim.opt.cursorline = true
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.signcolumn = "number"
 -- }}}
 -- scrolling {{{
 vim.opt.scrolloff = 10
+vim.keymap.set({ "n", "v" }, "<C-d>", "<C-d>zz", {})
+vim.keymap.set({ "n", "v" }, "<C-u>", "<C-u>zz", {})
+-- }}}
+-- joining {{{
+vim.keymap.set("n", "J", "@='mzJ`z'<CR>", {})
+vim.keymap.set("n", "gJ", "@='mzgJ`z'<CR>", {})
+vim.keymap.set("n", "<Space>J", "J", {})
+vim.keymap.set("n", "<Space>gJ", "gJ", {})
+vim.keymap.set("n", "g<Space>J", "gJ", {})
 -- }}}
 -- searching {{{
 vim.keymap.set("n", "Q", vim.cmd.nohlsearch, {})
+vim.keymap.set("n", "+", '/<\\CC-r><C-w><CR>', {})
+vim.keymap.set("v", "+", '"zy/\\C<C-r>z<CR>', {})
+vim.keymap.set("n", "-", '?\\C<C-r><C-w><CR>', {})
+vim.keymap.set("v", "-", '"zy?\\C<C-r>z<CR>', {})
 -- }}}
 -- indenting {{{
--- +-------------+---------+
--- | variable    | meaning |
--- +=============+=========+
--- | tabstop     |         |
--- | shiftwidth  |         |
--- | expandtab   |         |
--- | smarttab    |         |
--- | softtabstop ||
--- +-------------+---------+
+-- +-------------+------+---------+
+-- | variable    | type | meaning |
+-- +=============+======+=========+
+-- | autoindent  | bool |         |
+-- | copyindent  | bool |         |
+-- | smartindent | bool |         |
+-- | expandtab   | bool |         |
+-- | smarttab    | bool |         |
+-- | tabstop     | int  |         |
+-- | shiftwidth  | int  |         |
+-- | softtabstop | int  |         |
+-- +-------------+------+---------+
 -- }}}
 -- }}}
 -- lazy.nvim {{{
@@ -103,10 +121,10 @@ vim.keymap.set("n", "<leader>fm", builtin.man_pages, {})
 vim.keymap.set("n", "<leader>ft", builtin.builtin, {})
 -- }}}
 -- LSP {{{
--- register servers {{{
-require("neodev").setup {} -- ABOVE! lspconfig
 local lspconfig = require("lspconfig")
 local lsp_opts = { capabilities = require("cmp_nvim_lsp").default_capabilities() }
+-- register servers {{{
+require("neodev").setup {} -- ABOVE! lspconfig
 lspconfig.clangd.setup(lsp_opts)
 lspconfig.rust_analyzer.setup(lsp_opts)
 lspconfig.lua_ls.setup(lsp_opts)
