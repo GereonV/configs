@@ -8,8 +8,10 @@ vim.opt.list = true
 vim.opt.listchars = "tab:▶-,eol:↲,nbsp:␣,lead:•,trail:•,extends:󰶻,precedes:󰶺"
 vim.opt.showbreak = "↪ "
 vim.opt.lazyredraw = true
+vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "number"
+vim.keymap.set("n", "q", vim.cmd.nohlsearch, {})
 -- }}}
 -- lazy.nvim {{{
 -- lazypath {{{
@@ -29,6 +31,9 @@ vim.opt.rtp:prepend(lazypath)
 -- }}}
 -- setup {{{
 require("lazy").setup {
+  "t9md/vim-quickhl",            -- highlights wie textmarker
+  "airblade/vim-rooter",         -- change cwd automatically
+  "airblade/vim-gitgutter",      -- show diff markers
   "dhruvasagar/vim-table-mode",  -- auto-adjust tables
   "terrortylor/nvim-comment",    -- comment using `gc{motion}` and `gcc`
   "easymotion/vim-easymotion",   -- situational version of vim motions
@@ -186,4 +191,29 @@ require("nvim_comment").setup()
 require("lualine").setup {
   options = { theme = "dracula" },
 }
+-- }}}
+-- vim-rooter {{{
+vim.g.rooter_buftypes = { '' }
+vim.g.rooter_patterns = {
+  "!.git/worktrees",
+  ".git",
+  "_darcs",
+  ".gh",
+  ".bzr",
+  ".svn,",
+  "package.json",
+  "cargo.toml",
+  ">.config",
+}
+-- }}}
+-- quickhl {{{
+vim.keymap.set({ "n", "v" }, "<Space>m", "<Plug>(quickhl-manual-this)", {})
+vim.keymap.set({ "n", "v" }, "<Space>w", "<Plug>(quickhl-manual-this-whole-word)", {})
+vim.keymap.set({ "n", "v" }, "<Space>c", "<Plug>(quickhl-manual-clear)", {})
+vim.keymap.set({ "n", "v" }, "<Space>M", "<Plug>(quickhl-manual-reset)", {})
+vim.keymap.set("n", "<Space>j", "<Plug>(quickhl-tag-toggle)", {})
+-- }}}
+-- gitgutter {{{
+vim.keymap.set({ "o", "v" }, "ih", "<Plug>(GitGutterTextObjectInnerPending)", {}) -- "in hunk"
+vim.keymap.set({ "o", "v" }, "ah", "<Plug>(GitGutterTextObjectOuterPending)", {}) -- "all hunk"
 -- }}}
