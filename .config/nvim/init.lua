@@ -1,6 +1,16 @@
+-- vim: foldmethod=marker
+-- vim options {{{
 vim.cmd.colorscheme("evening")
 vim.cmd.highlight("link EndOfBuffer Pmenu")
-
+-- vim.cmd.highlight("Folded ctermbg=248")
+vim.opt.cursorline = true
+vim.opt.list = true
+vim.opt.listchars = "tab:▶-,eol:↲,nbsp:␣,lead:•,trail:•,extends:󰶻,precedes:󰶺"
+vim.opt.showbreak = "↪ "
+vim.opt.lazyredraw = true
+vim.opt.relativenumber = true
+vim.opt.signcolumn = "number"
+-- }}}
 -- lazy.nvim {{{
 -- lazypath {{{
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -19,8 +29,15 @@ vim.opt.rtp:prepend(lazypath)
 -- }}}
 -- setup {{{
 require("lazy").setup {
-  "folke/neodev.nvim",               -- LSP setup for nvim config
-  "neovim/nvim-lspconfig",           -- LSP defaults
+  "dhruvasagar/vim-table-mode",  -- auto-adjust tables
+  "terrortylor/nvim-comment",    -- comment using `gc{motion}` and `gcc`
+  "easymotion/vim-easymotion",   -- situational version of vim motions
+  "folke/neodev.nvim",           -- LSP setup for nvim config
+  "neovim/nvim-lspconfig",       -- LSP defaults
+  {
+    'nvim-lualine/lualine.nvim', -- statusline
+    dependencies = { 'nvim-tree/nvim-web-devicons' }
+  },
   {
     "nvim-telescope/telescope.nvim", -- fuzzy finder for basically anything
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -118,7 +135,6 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert {
-    ["<C-i>"] = cmp_next,
     ["<C-n>"] = cmp_next,
     ["<C-p>"] = cmp_prev,
     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -148,6 +164,7 @@ cmp.setup.cmdline(":", {
 -- }}}
 -- setup cmdline search {{{
 cmp.setup.cmdline({ "/", "?" }, {
+  mapping = cmp.mapping.preset.cmdline(),
   sources = { { name = "buffer" } },
   sorting = {
     priority_weight = 2, -- arbitrary value  from defaults
@@ -161,4 +178,12 @@ cmp.setup.cmdline({ "/", "?" }, {
 -- lazygit {{{
 local lazygit = require("lazygit")
 vim.keymap.set("n", "<leader>lg", lazygit.lazygit, {})
+-- }}}
+-- nvim_comment {{{
+require("nvim_comment").setup()
+-- }}}
+-- lualine {{{
+require("lualine").setup {
+  options = { theme = "dracula" },
+}
 -- }}}
