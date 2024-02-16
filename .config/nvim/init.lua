@@ -265,6 +265,11 @@ cmp.setup.cmdline({ "/", "?" }, {
 -- }}}
 -- lazygit {{{
 local lazygit = require("lazygit")
+local function open_lg()
+  vim.cmd.nohlsearch()
+  lazygit.lazygit()
+end
+vim.keymap.set("n", "<Leader>lg", open_lg, {})
 -- }}}
 -- lualine {{{
 require("lualine").setup {
@@ -293,8 +298,6 @@ vim.keymap.set({ "n", "v" }, "<Space>M", "<Plug>(quickhl-manual-reset)", {})
 vim.keymap.set("n", "<Space>j", "<Plug>(quickhl-tag-toggle)", {})
 -- }}}
 -- gitgutter {{{
-vim.keymap.set({ "o", "v" }, "ih", "<Plug>(GitGutterTextObjectInnerPending)", {}) -- "in hunk"
-vim.keymap.set({ "o", "v" }, "ah", "<Plug>(GitGutterTextObjectOuterPending)", {}) -- "all hunk"
 -- }}}
 -- vim-table-mode {{{
 -- +-------------+----------------------------------------+
@@ -320,5 +323,5 @@ vim.keymap.set({ "o", "v" }, "ah", "<Plug>(GitGutterTextObjectOuterPending)", {}
 vim.g.table_mode_corner_corner = "+"
 vim.g.table_mode_header_fillchar = "="
 vim.keymap.set("", "<Leader>tc", ":Tableize/;", {}) -- all modes
-vim.cmd.TableModeEnable()
+vim.cmd.TableModeEnable { mods = { silent = true } }
 -- }}}
