@@ -88,7 +88,7 @@ vim.keymap.set("v", "+", '"zy/\\C<C-r>z<CR>', {})
 -- | smarttab       | bool | on      | shift start of line using shiftwidth (ie. not tabstop or softtabstop) |
 -- | shiftwidth     | int  | 8       | number of spaces to indent each step with                             |
 -- |                |      |         | if == 0, uses tabstop                                                 |
--- | shiftround     | bool | off     | round indent to multiples of shiftwidth                               |
+-- | shiftround     | bool | off     | round indent to multiples of shiftwidth (for > & <)                   |
 -- +----------------+------+---------+-----------------------------------------------------------------------+
 -- | expandtab      | bool | off     | always use spaces instead of eagerly collapsing to tab characters     |
 -- +----------------+------+---------+-----------------------------------------------------------------------+
@@ -123,6 +123,7 @@ vim.keymap.set("v", "+", '"zy/\\C<C-r>z<CR>', {})
 -- +----------+--------+-----------------------------------------------------+
 -- }}}
 vim.opt.smartindent = true
+vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.shiftround = true
 vim.opt.copyindent = false
@@ -278,13 +279,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
 local cmp = require("cmp")
 local cmp_buffer = require("cmp_buffer")
 -- setup (sources & mappings) {{{
-local function cmp_next()
-  if not cmp.visible() then cmp.complete() end
-  cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
+local has_words_before = function()
+  unpack = unpack or table.unpack
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-local function cmp_prev()
-  if not cmp.visible() then cmp.complete() end
-  cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
+local feedkey = function(key, mode)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 cmp.setup {
   snippet = {
@@ -293,15 +294,28 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert {
-    ["<C-n>"] = cmp_next,
-    ["<C-p>"] = cmp_prev,
     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-e>"] = cmp.mapping.abort(),        -- stop completion
     ["<C-Space>"] = cmp.mapping.complete(), -- restart completion
-    ["<CR>"] = cmp.mapping.confirm {
-      select = true                         -- `select = false` -> only confirm explicitly selected items.
-    },
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif vim.fn["vsnip#available"](1) == 1 then
+        feedkey("<Plug>(vsnip-expand-or-jump)", "")
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+      end
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function()
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+        feedkey("<Plug>(vsnip-jump-prev)", "")
+      end
+    end, { "i", "s" }),
   },
   sources = {
     { name = "calc" },
