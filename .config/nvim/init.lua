@@ -298,6 +298,18 @@ vim.keymap.set({ "n", "v" }, "<Space>M", "<Plug>(quickhl-manual-reset)", {})
 vim.keymap.set("n", "<Space>j", "<Plug>(quickhl-tag-toggle)", {})
 -- }}}
 -- gitgutter {{{
+-- +------------+-----------------------------------------+
+-- | mapping    | action                                  |
+-- +============+=========================================+
+-- | <Leader>hp | preview hunk                            |
+-- | <Leader>hs | stage hunk                              |
+-- | <Leader>hu | undo hunk                               |
+-- | ]c         | next hunk                               |
+-- | [c         | prev hunk                               |
+-- | ic         | "in hunk"                               |
+-- | ac         | "all hunk" (includes trailing newlines) |
+-- +------------+-----------------------------------------+
+vim.opt.updatetime = 100
 -- }}}
 -- vim-table-mode {{{
 -- +-------------+----------------------------------------+
