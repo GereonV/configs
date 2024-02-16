@@ -146,27 +146,37 @@ vim.opt.rtp:prepend(lazypath)
 -- }}}
 -- setup {{{
 require("lazy").setup {
-  "t9md/vim-quickhl",            -- highlights wie textmarker
-  "airblade/vim-rooter",         -- change cwd automatically
-  "airblade/vim-gitgutter",      -- show diff markers
-  "dhruvasagar/vim-table-mode",  -- auto-adjust tables
-  "easymotion/vim-easymotion",   -- situational version of vim motions
-  "folke/neodev.nvim",           -- LSP setup for nvim config
-  "neovim/nvim-lspconfig",       -- LSP defaults
+  "t9md/vim-quickhl",                                -- highlights wie textmarker
+  "airblade/vim-rooter",                             -- change cwd automatically
+  "airblade/vim-gitgutter",                          -- show diff markers
+  "dhruvasagar/vim-table-mode",                      -- auto-adjust tables
+  "easymotion/vim-easymotion",                       -- situational version of vim motions
+  "folke/neodev.nvim",                               -- LSP setup for nvim config
+  "neovim/nvim-lspconfig",                           -- LSP defaults
   {
-    'nvim-lualine/lualine.nvim', -- statusline
-    dependencies = { 'nvim-tree/nvim-web-devicons' }
+    "nvim-lualine/lualine.nvim",                     -- statusline
+    dependencies = { "nvim-tree/nvim-web-devicons" } -- file icons
   },
   {
-    "nvim-telescope/telescope.nvim", -- fuzzy finder for basically anything
-    dependencies = { "nvim-lua/plenary.nvim" },
+    "nvim-telescope/telescope.nvim",            -- fuzzy finder for basically anything
+    dependencies = { "nvim-lua/plenary.nvim" }, -- floating window
   },
   {
     "kdheepak/lazygit.nvim",
     dependencies = { "nvim-lua/plenary.nvim" }, -- optional for floating window border decoration
   },
   {
-    "terrortylor/nvim-comment",    -- comment using `gc{motion}` and `gcc`
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = {
+      {
+        "nvim-telescope/telescope.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+      },
+      "nvim-tree/nvim-web-devicons", -- file icons
+    },
+  },
+  {
+    "terrortylor/nvim-comment", -- comment using `gc{motion}` and `gcc`
     config = function()
       require("nvim_comment").setup {}
     end,
@@ -322,7 +332,7 @@ require("lualine").setup {
 }
 -- }}}
 -- vim-rooter {{{
-vim.g.rooter_buftypes = { '' }
+vim.g.rooter_buftypes = { "" }
 vim.g.rooter_patterns = {
   "!.git/worktrees",
   ".git",
