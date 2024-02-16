@@ -127,6 +127,14 @@ require("lazy").setup {
     end,
   },
   {
+    "nvim-tree/nvim-tree.lua",
+    lazy = false,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("nvim-tree").setup {}
+    end,
+  },
+  {
     "hrsh7th/nvim-cmp",                         -- auto completion
     dependencies = {                            -- cmp "sources"
       "hrsh7th/cmp-nvim-lsp",                   -- lsp
@@ -146,7 +154,7 @@ require("lazy").setup {
 -- telescope {{{
 require("telescope").setup {
   defaults = {
-    prompt_prefix = "🔍 ",
+    prompt_prefix = "🔍  ",
   },
 }
 local builtin = require("telescope.builtin")
