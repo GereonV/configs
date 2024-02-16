@@ -105,7 +105,6 @@ require("lazy").setup {
   "airblade/vim-rooter",         -- change cwd automatically
   "airblade/vim-gitgutter",      -- show diff markers
   "dhruvasagar/vim-table-mode",  -- auto-adjust tables
-  "terrortylor/nvim-comment",    -- comment using `gc{motion}` and `gcc`
   "easymotion/vim-easymotion",   -- situational version of vim motions
   "folke/neodev.nvim",           -- LSP setup for nvim config
   "neovim/nvim-lspconfig",       -- LSP defaults
@@ -120,6 +119,12 @@ require("lazy").setup {
   {
     "kdheepak/lazygit.nvim",
     dependencies = { "nvim-lua/plenary.nvim" }, -- optional for floating window border decoration
+  },
+  {
+    "terrortylor/nvim-comment",    -- comment using `gc{motion}` and `gcc`
+    config = function()
+      require("nvim_comment").setup {}
+    end,
   },
   {
     "hrsh7th/nvim-cmp",                         -- auto completion
@@ -252,10 +257,6 @@ cmp.setup.cmdline({ "/", "?" }, {
 -- }}}
 -- lazygit {{{
 local lazygit = require("lazygit")
-vim.keymap.set("n", "<Leader>lg", lazygit.lazygit, {})
--- }}}
--- nvim_comment {{{
-require("nvim_comment").setup()
 -- }}}
 -- lualine {{{
 require("lualine").setup {
