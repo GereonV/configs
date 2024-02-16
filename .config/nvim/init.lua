@@ -158,10 +158,6 @@ require("lazy").setup {
     dependencies = { "nvim-tree/nvim-web-devicons" } -- file icons
   },
   {
-    "nvim-telescope/telescope.nvim",            -- fuzzy finder for basically anything
-    dependencies = { "nvim-lua/plenary.nvim" }, -- floating window
-  },
-  {
     "kdheepak/lazygit.nvim",
     dependencies = { "nvim-lua/plenary.nvim" }, -- optional for floating window border decoration
   },
@@ -169,10 +165,10 @@ require("lazy").setup {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = {
       {
-        "nvim-telescope/telescope.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },
+        "nvim-telescope/telescope.nvim",            -- fuzzy finder for basically anything
+        dependencies = { "nvim-lua/plenary.nvim" }, -- floating window
       },
-      "nvim-tree/nvim-web-devicons", -- file icons
+      "nvim-tree/nvim-web-devicons",                -- file icons
     },
   },
   {
@@ -182,9 +178,9 @@ require("lazy").setup {
     end,
   },
   {
-    "nvim-tree/nvim-tree.lua",
+    "nvim-tree/nvim-tree.lua",                        -- tree like netrw
     lazy = false,
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "nvim-tree/nvim-web-devicons" }, -- file icons
     config = function()
       require("nvim-tree").setup {}
     end,
@@ -199,7 +195,7 @@ require("lazy").setup {
       "hrsh7th/cmp-cmdline",                    -- pathes and filenames
       {
         "hrsh7th/cmp-vsnip",                    -- vim-vsnip
-        dependencies = { "hrsh7th/vim-vsnip" }, -- VSC snippet feature
+        dependencies = { "hrsh7th/vim-vsnip" }, -- VSCode snippet feature
       },
     },
   },
@@ -246,6 +242,9 @@ require("neodev").setup {} -- ABOVE! lspconfig
 lspconfig.clangd.setup(lsp_opts)
 lspconfig.rust_analyzer.setup(lsp_opts)
 lspconfig.lua_ls.setup(lsp_opts)
+lspconfig.texlab.setup(lsp_opts)
+lspconfig.hls.setup(lsp_opts)
+lspconfig.zls.setup(lsp_opts)
 -- }}}
 -- mappings {{{
 vim.api.nvim_create_autocmd("LspAttach", {
