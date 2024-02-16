@@ -1,8 +1,6 @@
 -- vim: foldmethod=marker
 -- vim options {{{
 vim.opt.lazyredraw = true
-vim.keymap.set("", "+", "", {})
-vim.keymap.set("", "-", "", {})
 -- visual {{{
 vim.cmd.colorscheme("evening")
 vim.cmd.highlight("link EndOfBuffer Pmenu")
@@ -14,6 +12,40 @@ vim.opt.cursorline = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "number"
+-- }}}
+-- copy & paste operators {{{
+-- undefines {{{
+vim.keymap.set("", "<Space>", "", {}) --  just use l!?
+vim.keymap.set("", "+", "", {})       -- used for searching
+vim.keymap.set("", "-", "", {})       -- used as clipboard-prefix
+vim.keymap.set("v", "x", "", {})      -- just use d!?
+vim.keymap.set("v", "X", "", {})      -- just use d!?
+vim.keymap.set("v", "D", "", {})      -- just use d!?
+vim.keymap.set("v", "C", "", {})      -- just use c!?
+vim.keymap.set("n", "S", "", {})      -- just use cc!?
+vim.keymap.set("v", "s", "", {})      -- just use c!?
+vim.keymap.set("v", "Y", "", {})      -- just use y!?
+vim.keymap.set("v", "P", "", {})      -- just use y!?
+-- }}}
+-- own mappings {{{
+vim.keymap.set({ "n", "v" }, "<Space>d", '"+d', {})
+vim.keymap.set({ "n", "v" }, "<Space>c", '"+c', {})
+vim.keymap.set({ "n", "v" }, "<Space>y", '"+y', {})
+vim.keymap.set({ "n", "v" }, "<Space>p", '"+p', {})
+vim.keymap.set({ "n", "v" }, "-d", '"_d', {})
+vim.keymap.set({ "n", "v" }, "-c", '"_c', {})
+vim.keymap.set("n", "<Space>D", '"+D', {})
+vim.keymap.set("n", "<Space>C", '"+C', {})
+vim.keymap.set("n", "<Space>Y", '"+y$', {})
+vim.keymap.set("n", "<Space>P", '"+P', {})
+vim.keymap.set("v", "-<Space>P", '"_d"+P', {})
+vim.keymap.set("v", "<Space>-P", '"_d"+P', {})
+vim.keymap.set("n", "x", "_x", {})
+vim.keymap.set("n", "X", "_X", {})
+vim.keymap.set("n", "-D", '"_D', {})
+vim.keymap.set("n", "-C", '"_C', {})
+vim.keymap.set("v", "-p", '"_dP', {})
+-- }}}
 -- }}}
 -- scrolling {{{
 vim.opt.scrolloff = 10
@@ -28,11 +60,13 @@ vim.keymap.set("n", "<Space>gJ", "gJ", {})
 vim.keymap.set("n", "g<Space>J", "gJ", {})
 -- }}}
 -- searching {{{
+vim.opt.ignorecase = true -- ignore case when searching
+vim.opt.smartcase = true  -- override ignorecase if pattern includes uppercase
 vim.keymap.set("n", "Q", vim.cmd.nohlsearch, {})
 vim.keymap.set("n", "+", '/<\\CC-r><C-w><CR>', {})
 vim.keymap.set("v", "+", '"zy/\\C<C-r>z<CR>', {})
-vim.keymap.set("n", "-", '?\\C<C-r><C-w><CR>', {})
-vim.keymap.set("v", "-", '"zy?\\C<C-r>z<CR>', {})
+-- vim.keymap.set("n", "-", '?\\C<C-r><C-w><CR>', {})
+-- vim.keymap.set("v", "-", '"zy?\\C<C-r>z<CR>', {})
 -- }}}
 -- indenting {{{
 -- +-------------+------+---------+
