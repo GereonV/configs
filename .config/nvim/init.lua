@@ -1,17 +1,35 @@
 -- vim: foldmethod=marker
 -- vim options {{{
+vim.opt.lazyredraw = true
+vim.opt.signcolumn = "number"
+-- visual {{{
 vim.cmd.colorscheme("evening")
 vim.cmd.highlight("link EndOfBuffer Pmenu")
 -- vim.cmd.highlight("Folded ctermbg=248")
-vim.opt.cursorline = true
 vim.opt.list = true
 vim.opt.listchars = "tab:▶-,eol:↲,nbsp:␣,lead:•,trail:•,extends:󰶻,precedes:󰶺"
 vim.opt.showbreak = "↪ "
-vim.opt.lazyredraw = true
+vim.opt.cursorline = true
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.signcolumn = "number"
-vim.keymap.set("n", "q", vim.cmd.nohlsearch, {})
+-- }}}
+-- scrolling {{{
+vim.opt.scrolloff = 10
+-- }}}
+-- searching {{{
+vim.keymap.set("n", "Q", vim.cmd.nohlsearch, {})
+-- }}}
+-- indenting {{{
+-- +-------------+---------+
+-- | variable    | meaning |
+-- +=============+=========+
+-- | tabstop     |         |
+-- | shiftwidth  |         |
+-- | expandtab   |         |
+-- | smarttab    |         |
+-- | softtabstop ||
+-- +-------------+---------+
+-- }}}
 -- }}}
 -- lazy.nvim {{{
 -- lazypath {{{
@@ -216,4 +234,30 @@ vim.keymap.set("n", "<Space>j", "<Plug>(quickhl-tag-toggle)", {})
 -- gitgutter {{{
 vim.keymap.set({ "o", "v" }, "ih", "<Plug>(GitGutterTextObjectInnerPending)", {}) -- "in hunk"
 vim.keymap.set({ "o", "v" }, "ah", "<Plug>(GitGutterTextObjectOuterPending)", {}) -- "all hunk"
+-- }}}
+-- vim-table-mode {{{
+-- +-------------+----------------------------------------+
+-- | mapping     | action                                 |
+-- +=============+========================================+
+-- | <Leader>tm  | :TableModeToggle                       |
+-- | <Leader>tr  | :TableModeRealign                      |
+-- | <Leader>tt  | :Tableize            (CSV -> table)    |
+-- | <Leader>tc  | :Tableize/;          (CSV -> table)    |
+-- | <Leader>T   | :Tableize{pattern}   (CSV -> table)    |
+-- | <Leader>tdd | delete table row                       |
+-- | <Leader>tdc | delete table column                    |
+-- | <Leader>tic | insert table column after cursor       |
+-- | <Leader>tiC | insert table column before cursor      |
+-- | <Leader>ts  | :TableSort                             |
+-- | <Leader>tfa | :TableAddFormula                       |
+-- +-------------+----------------------------------------+
+-- | ]\|         | next cell motion                       |
+-- | [\|         | prev cell motion                       |
+-- | i\|         | "in  table cell" when operator pending |
+-- | a\|         | "all table cell" when operator pending |
+-- +-------------+----------------------------------------+
+vim.g.table_mode_corner_corner = "+"
+vim.g.table_mode_header_fillchar = "="
+vim.keymap.set("", "<Leader>tc", ":Tableize/;", {}) -- all modes
+vim.cmd.TableModeEnable()
 -- }}}
