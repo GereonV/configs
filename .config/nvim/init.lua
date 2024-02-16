@@ -40,8 +40,8 @@ vim.keymap.set("n", "<Space>Y", '"+y$', {})
 vim.keymap.set("n", "<Space>P", '"+P', {})
 vim.keymap.set("v", "-<Space>P", '"_d"+P', {})
 vim.keymap.set("v", "<Space>-P", '"_d"+P', {})
-vim.keymap.set("n", "x", "_x", {})
-vim.keymap.set("n", "X", "_X", {})
+vim.keymap.set("n", "x", '"_x', {})
+vim.keymap.set("n", "X", '"_X', {})
 vim.keymap.set("n", "-D", '"_D', {})
 vim.keymap.set("n", "-C", '"_C', {})
 vim.keymap.set("v", "-p", '"_dP', {})
@@ -145,14 +145,14 @@ require("telescope").setup {
   },
 }
 local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-vim.keymap.set("n", "<leader>fo", builtin.oldfiles, {})
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
-vim.keymap.set("n", "<leader>fs", builtin.grep_string, {})
-vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
-vim.keymap.set("n", "<leader>fm", builtin.man_pages, {})
-vim.keymap.set("n", "<leader>ft", builtin.builtin, {})
+vim.keymap.set("n", "<Leader>ff", builtin.find_files, {})
+vim.keymap.set("n", "<Leader>fo", builtin.oldfiles, {})
+vim.keymap.set("n", "<Leader>fg", builtin.live_grep, {})
+vim.keymap.set("n", "<Leader>fs", builtin.grep_string, {})
+vim.keymap.set("n", "<Leader>fb", builtin.buffers, {})
+vim.keymap.set("n", "<Leader>fh", builtin.help_tags, {})
+vim.keymap.set("n", "<Leader>fm", builtin.man_pages, {})
+vim.keymap.set("n", "<Leader>ft", builtin.builtin, {})
 -- }}}
 -- LSP {{{
 local lspconfig = require("lspconfig")
@@ -176,15 +176,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
     vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-    vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
-    vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
-    vim.keymap.set("n", "<space>wl", function()
+    vim.keymap.set("n", "<Space>wa", vim.lsp.buf.add_workspace_folder, opts)
+    vim.keymap.set("n", "<Space>wr", vim.lsp.buf.remove_workspace_folder, opts)
+    vim.keymap.set("n", "<Space>wl", function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, opts)
-    vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
-    vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
+    vim.keymap.set("n", "<Space>rn", vim.lsp.buf.rename, opts)
+    vim.keymap.set({ "n", "v" }, "<Space>ca", vim.lsp.buf.code_action, opts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-    vim.keymap.set("n", "<space>f", function()
+    vim.keymap.set("n", "<Space>f", function()
       vim.lsp.buf.format { async = true }
     end, opts)
   end,
@@ -252,7 +252,7 @@ cmp.setup.cmdline({ "/", "?" }, {
 -- }}}
 -- lazygit {{{
 local lazygit = require("lazygit")
-vim.keymap.set("n", "<leader>lg", lazygit.lazygit, {})
+vim.keymap.set("n", "<Leader>lg", lazygit.lazygit, {})
 -- }}}
 -- nvim_comment {{{
 require("nvim_comment").setup()
