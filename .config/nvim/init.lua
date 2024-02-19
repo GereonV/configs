@@ -147,11 +147,25 @@ vim.opt.rtp:prepend(lazypath)
 -- }}}
 -- setup {{{
 require("lazy").setup {
-  "t9md/vim-quickhl",                                -- highlights wie textmarker
-  "airblade/vim-rooter",                             -- change cwd automatically
-  "airblade/vim-gitgutter",                          -- show diff markers
-  "dhruvasagar/vim-table-mode",                      -- auto-adjust tables
-  "easymotion/vim-easymotion",                       -- situational version of vim motions
+  "t9md/vim-quickhl",           -- highlights wie textmarker
+  "airblade/vim-rooter",        -- change cwd automatically
+  "numToStr/FTerm.nvim",        -- floating terminal
+  "airblade/vim-gitgutter",     -- show diff markers
+  "dhruvasagar/vim-table-mode", -- auto-adjust tables
+  {
+    "folke/flash.nvim",         -- situational version of vim motions
+    event = "VeryLazy",
+    ---@type Flash.Config
+    opts = {},
+    -- stylua: ignore
+    keys = {
+      { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+      { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+      { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+      { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+    },
+  },
   "folke/neodev.nvim",                               -- LSP setup for nvim config
   "neovim/nvim-lspconfig",                           -- LSP defaults
   {
@@ -298,6 +312,7 @@ cmp.setup {
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-e>"] = cmp.mapping.abort(),        -- stop completion
     ["<C-Space>"] = cmp.mapping.complete(), -- restart completion
+    ["<CR>"] = cmp.mapping.confirm { select = true },
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -420,4 +435,11 @@ vim.g.table_mode_corner_corner = "+"
 vim.g.table_mode_header_fillchar = "="
 vim.keymap.set("", "<Leader>tc", ":Tableize/;", {}) -- all modes
 vim.cmd.TableModeEnable { mods = { silent = true } }
+-- }}}
+-- FTerm {{{
+local fterm = require("FTerm")
+fterm.setup {
+  border = "none",
+}
+vim.keymap.set({ "n", "t" }, "<Leader>i", fterm.toggle)
 -- }}}
