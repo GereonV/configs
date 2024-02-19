@@ -11,62 +11,62 @@ vim.opt.showbreak = "↪ "
 vim.opt.cursorline = true
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.signcolumn = "number"
+vim.opt.signcolumn = "yes:2"
 -- }}}
 -- copy & paste operators {{{
 -- undefines {{{
-vim.keymap.set("", "<Space>", "", {}) --  just use l!?
-vim.keymap.set("", "+", "", {})       -- used for searching
-vim.keymap.set("", "-", "", {})       -- used as clipboard-prefix
-vim.keymap.set("v", "x", "", {})      -- just use d!?
-vim.keymap.set("v", "X", "", {})      -- just use d!?
-vim.keymap.set("v", "D", "", {})      -- just use d!?
-vim.keymap.set("v", "C", "", {})      -- just use c!?
-vim.keymap.set("n", "S", "", {})      -- just use cc!?
-vim.keymap.set("v", "s", "", {})      -- just use c!?
-vim.keymap.set("v", "Y", "", {})      -- just use y!?
-vim.keymap.set("v", "P", "", {})      -- just use y!?
+vim.keymap.set("", "<Space>", "") --  just use l!?
+vim.keymap.set("", "+", "")       -- used for searching
+vim.keymap.set("", "-", "")       -- used as clipboard-prefix
+vim.keymap.set("v", "x", "")      -- just use d!?
+vim.keymap.set("v", "X", "")      -- just use d!?
+vim.keymap.set("v", "D", "")      -- just use d!?
+vim.keymap.set("v", "C", "")      -- just use c!?
+vim.keymap.set("n", "S", "")      -- just use cc!?
+vim.keymap.set("v", "s", "")      -- just use c!?
+vim.keymap.set("v", "Y", "")      -- just use y!?
+vim.keymap.set("v", "P", "")      -- just use y!?
 -- }}}
 -- own mappings {{{
-vim.keymap.set({ "n", "v" }, "<Space>d", '"+d', {})
-vim.keymap.set({ "n", "v" }, "<Space>c", '"+c', {})
-vim.keymap.set({ "n", "v" }, "<Space>y", '"+y', {})
-vim.keymap.set({ "n", "v" }, "<Space>p", '"+p', {})
-vim.keymap.set({ "n", "v" }, "-d", '"_d', {})
-vim.keymap.set({ "n", "v" }, "-c", '"_c', {})
-vim.keymap.set("n", "<Space>D", '"+D', {})
-vim.keymap.set("n", "<Space>C", '"+C', {})
-vim.keymap.set("n", "<Space>Y", '"+y$', {})
-vim.keymap.set("n", "<Space>P", '"+P', {})
-vim.keymap.set("v", "-<Space>P", '"_d"+P', {})
-vim.keymap.set("v", "<Space>-P", '"_d"+P', {})
-vim.keymap.set("n", "x", '"_x', {})
-vim.keymap.set("n", "X", '"_X', {})
-vim.keymap.set("n", "-D", '"_D', {})
-vim.keymap.set("n", "-C", '"_C', {})
-vim.keymap.set("v", "-p", '"_dP', {})
+vim.keymap.set({ "n", "v" }, "<Space>d", '"+d')
+vim.keymap.set({ "n", "v" }, "<Space>c", '"+c')
+vim.keymap.set({ "n", "v" }, "<Space>y", '"+y')
+vim.keymap.set({ "n", "v" }, "<Space>p", '"+p')
+vim.keymap.set({ "n", "v" }, "-d", '"_d')
+vim.keymap.set({ "n", "v" }, "-c", '"_c')
+vim.keymap.set("n", "<Space>D", '"+D')
+vim.keymap.set("n", "<Space>C", '"+C')
+vim.keymap.set("n", "<Space>Y", '"+y$')
+vim.keymap.set("n", "<Space>P", '"+P')
+vim.keymap.set("v", "-<Space>P", '"_d"+P')
+vim.keymap.set("v", "<Space>-P", '"_d"+P')
+vim.keymap.set("n", "x", '"_x')
+vim.keymap.set("n", "X", '"_X')
+vim.keymap.set("n", "-D", '"_D')
+vim.keymap.set("n", "-C", '"_C')
+vim.keymap.set("v", "-p", '"_dP')
 -- }}}
 -- }}}
 -- scrolling {{{
 vim.opt.scrolloff = 10
-vim.keymap.set({ "n", "v" }, "<C-d>", "<C-d>zz", {})
-vim.keymap.set({ "n", "v" }, "<C-u>", "<C-u>zz", {})
+vim.keymap.set({ "n", "v" }, "<C-d>", "<C-d>zz")
+vim.keymap.set({ "n", "v" }, "<C-u>", "<C-u>zz")
 -- }}}
 -- joining {{{
-vim.keymap.set("n", "J", "@='mzJ`z'<CR>", {})
-vim.keymap.set("n", "gJ", "@='mzgJ`z'<CR>", {})
-vim.keymap.set("n", "<Space>J", "J", {})
-vim.keymap.set("n", "<Space>gJ", "gJ", {})
-vim.keymap.set("n", "g<Space>J", "gJ", {})
+vim.keymap.set("n", "J", "@='mzJ`z'<CR>")
+vim.keymap.set("n", "gJ", "@='mzgJ`z'<CR>")
+vim.keymap.set("n", "<Space>J", "J")
+vim.keymap.set("n", "<Space>gJ", "gJ")
+vim.keymap.set("n", "g<Space>J", "gJ")
 -- }}}
 -- searching {{{
 vim.opt.ignorecase = true -- ignore case when searching
 vim.opt.smartcase = true  -- override ignorecase if pattern includes uppercase
-vim.keymap.set("n", "Q", vim.cmd.nohlsearch, {})
-vim.keymap.set("n", "+", '/\\C<C-r><C-w><CR>', {})
-vim.keymap.set("v", "+", '"zy/\\C<C-r>z<CR>', {})
--- vim.keymap.set("n", "-", '?\\C<C-r><C-w><CR>', {})
--- vim.keymap.set("v", "-", '"zy?\\C<C-r>z<CR>', {})
+vim.keymap.set("n", "Q", vim.cmd.nohlsearch)
+vim.keymap.set("n", "+", '/\\C<C-r><C-w><CR>')
+vim.keymap.set("v", "+", '"zy/\\C<C-r>z<CR>')
+-- vim.keymap.set("n", "-", '?\\C<C-r><C-w><CR>')
+-- vim.keymap.set("v", "-", '"zy?\\C<C-r>z<CR>')
 -- }}}
 -- indenting {{{
 -- +----------+---------------+--------+---------+----------------------------------------------------------+
@@ -159,11 +159,11 @@ require("lazy").setup {
     opts = {},
     -- stylua: ignore
     keys = {
-      { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
-      { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
-      { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
-      { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+      { "s",     mode = { "n", "x", "o" }, require("flash").jump,              desc = "Flash" },
+      { "S",     mode = { "n", "x", "o" }, require("flash").treesitter,        desc = "Flash Treesitter" },
+      { "r",     mode = "o",               require("flash").remote,            desc = "Remote Flash" },
+      { "R",     mode = { "o", "x" },      require("flash").treesitter_search, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" },           require("flash").toggle,            desc = "Toggle Flash Search" },
     },
   },
   "folke/neodev.nvim",                               -- LSP setup for nvim config
@@ -238,16 +238,16 @@ local function browse_home()
     path = "~",
   }
 end
-vim.keymap.set("n", "<Leader>ff", builtin.find_files, {})
-vim.keymap.set("n", "<Leader>fo", builtin.oldfiles, {})
-vim.keymap.set("n", "<Leader>fd", file_browser.file_browser, {})
-vim.keymap.set("n", "<Leader>fa", browse_home, {})
-vim.keymap.set("n", "<Leader>fg", builtin.live_grep, {})
-vim.keymap.set("n", "<Leader>fs", builtin.grep_string, {})
-vim.keymap.set("n", "<Leader>fb", builtin.buffers, {})
-vim.keymap.set("n", "<Leader>fh", builtin.help_tags, {})
-vim.keymap.set("n", "<Leader>fm", builtin.man_pages, {})
-vim.keymap.set("n", "<Leader>ft", builtin.builtin, {})
+vim.keymap.set("n", "<Leader>ff", builtin.find_files)
+vim.keymap.set("n", "<Leader>fo", builtin.oldfiles)
+vim.keymap.set("n", "<Leader>fd", file_browser.file_browser)
+vim.keymap.set("n", "<Leader>fa", browse_home)
+vim.keymap.set("n", "<Leader>fg", builtin.live_grep)
+vim.keymap.set("n", "<Leader>fs", builtin.grep_string)
+vim.keymap.set("n", "<Leader>fb", builtin.buffers)
+vim.keymap.set("n", "<Leader>fh", builtin.help_tags)
+vim.keymap.set("n", "<Leader>fm", builtin.man_pages)
+vim.keymap.set("n", "<Leader>ft", builtin.builtin)
 -- }}}
 -- LSP {{{
 local lspconfig = require("lspconfig")
@@ -368,7 +368,7 @@ local function open_lg()
   vim.cmd.nohlsearch()
   lazygit.lazygit()
 end
-vim.keymap.set("n", "<Leader>lg", open_lg, {})
+vim.keymap.set("n", "<Leader>lg", open_lg)
 -- }}}
 -- lualine {{{
 require("lualine").setup {
@@ -390,11 +390,11 @@ vim.g.rooter_patterns = {
 }
 -- }}}
 -- quickhl {{{
-vim.keymap.set({ "n", "v" }, "<Space>m", "<Plug>(quickhl-manual-this)", {})
-vim.keymap.set({ "n", "v" }, "<Space>w", "<Plug>(quickhl-manual-this-whole-word)", {})
-vim.keymap.set({ "n", "v" }, "<Space>c", "<Plug>(quickhl-manual-clear)", {})
-vim.keymap.set({ "n", "v" }, "<Space>M", "<Plug>(quickhl-manual-reset)", {})
-vim.keymap.set("n", "<Space>j", "<Plug>(quickhl-tag-toggle)", {})
+vim.keymap.set({ "n", "v" }, "<Space>m", "<Plug>(quickhl-manual-this)")
+vim.keymap.set({ "n", "v" }, "<Space>w", "<Plug>(quickhl-manual-this-whole-word)")
+vim.keymap.set({ "n", "v" }, "<Space>c", "<Plug>(quickhl-manual-clear)")
+vim.keymap.set({ "n", "v" }, "<Space>M", "<Plug>(quickhl-manual-reset)")
+vim.keymap.set("n", "<Space>j", "<Plug>(quickhl-tag-toggle)")
 -- }}}
 -- gitgutter {{{
 -- +------------+-----------------------------------------+
@@ -433,7 +433,7 @@ vim.opt.updatetime = 100
 -- +-------------+----------------------------------------+
 vim.g.table_mode_corner_corner = "+"
 vim.g.table_mode_header_fillchar = "="
-vim.keymap.set("", "<Leader>tc", ":Tableize/;", {}) -- all modes
+vim.keymap.set("", "<Leader>tc", ":Tableize/;") -- all modes
 vim.cmd.TableModeEnable { mods = { silent = true } }
 -- }}}
 -- FTerm {{{
