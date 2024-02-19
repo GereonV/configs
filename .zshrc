@@ -23,6 +23,14 @@ export PROMPT='$(ret_prompt_string) %F{green}%n%f@%F{magenta}%m%f:%F{magenta}%~%
 type powerline-shell &> /dev/null && PROMPT='$(powerline-shell --shell zsh $?)'
 setopt PROMPT_SUBST
 
+fg-bg() {
+	[[ ${#BUFFER} == 0 ]] || return 0
+	BUFFER=fg
+	zle accept-line
+}
+zle -N fg-bg # register widget (defaults to executing function with same name)
+bindkey '^z' fg-bg # bind widget
+
 alias top="top -o cpu"
 alias ll="ls -al"
 alias lt="ls -alrt"
@@ -48,6 +56,6 @@ then
 	. /opt/homebrew/opt/fzf/shell/key-bindings.zsh
 	. /opt/homebrew/opt/fzf/shell/completion.zsh
 fi
-export FZF_DEFAULT_COMMAND="fd --unrestricted --follow --exclude .git --exclude node_modules --exclude '*.pyc' . ~"
+export FZF_DEFAULT_COMMAND="fd --unrestricted --follow --exclude .git --exclude node_modules --exclude '*.pyc' . ~ ."
 export FZF_CTRL_T_COMMAND="fd --unrestricted --follow --strip-cwd-prefix --exclude .git --exclude node_modules --exclude '*.pyc'"
-export FZF_ALT_C_COMMAND="fd --type d --unrestricted --follow --exclude .git --exclude node_modules --exclude '*.pyc' . ~"
+export FZF_ALT_C_COMMAND="fd --type d --unrestricted --follow --exclude .git --exclude node_modules --exclude '*.pyc' . ~ ."
