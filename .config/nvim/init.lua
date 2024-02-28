@@ -6,7 +6,15 @@ vim.cmd.colorscheme("evening")
 vim.cmd.highlight("link EndOfBuffer Pmenu")
 -- vim.cmd.highlight("Folded ctermbg=248")
 vim.opt.list = true
-vim.opt.listchars = "tab:▶-,eol:↲,nbsp:␣,lead:•,trail:•,extends:󰶻,precedes:󰶺"
+vim.opt.listchars = {
+  tab = "▶-",
+  eol = "↲",
+  nbsp = "␣",
+  lead = "•",
+  trail = "•",
+  extends = "󰶻",
+  precedes = "󰶺",
+}
 vim.opt.showbreak = "↪ "
 vim.opt.cursorline = true
 vim.opt.number = true
@@ -159,11 +167,11 @@ require("lazy").setup {
     opts = {},
     -- stylua: ignore
     keys = {
-      { "s",     mode = { "n", "x", "o" }, require("flash").jump,              desc = "Flash" },
-      { "S",     mode = { "n", "x", "o" }, require("flash").treesitter,        desc = "Flash Treesitter" },
-      { "r",     mode = "o",               require("flash").remote,            desc = "Remote Flash" },
-      { "R",     mode = { "o", "x" },      require("flash").treesitter_search, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" },           require("flash").toggle,            desc = "Toggle Flash Search" },
+      { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+      { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+      { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+      { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
     },
   },
   "folke/neodev.nvim",                               -- LSP setup for nvim config
@@ -260,6 +268,9 @@ lspconfig.lua_ls.setup(lsp_opts)
 lspconfig.texlab.setup(lsp_opts)
 lspconfig.hls.setup(lsp_opts)
 lspconfig.zls.setup(lsp_opts)
+lspconfig.bashls.setup(lsp_opts)
+lspconfig.jdtls.setup(lsp_opts)
+lspconfig.pylsp.setup(lsp_opts)
 -- }}}
 -- mappings {{{
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -371,9 +382,11 @@ end
 vim.keymap.set("n", "<Leader>lg", open_lg)
 -- }}}
 -- lualine {{{
-require("lualine").setup {
-  options = { theme = "dracula" },
-}
+local lualine = require("lualine")
+local lualine_config = lualine.get_config()
+lualine_config.options.theme = "dracula"
+lualine_config.sections.lualine_c = { { "filename", path = 1 } }
+lualine.setup(lualine_config)
 -- }}}
 -- vim-rooter {{{
 vim.g.rooter_buftypes = { "" }
