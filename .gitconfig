@@ -7,10 +7,14 @@
 [alias]
 	l = log --all --oneline --graph
 	pushf = push --force-with-lease
+	fa = fetch --all --tags --prune
 [init]
 	defaultBranch = master
 [merge]
 	tool = nvimdiff
+[rebase]
+	updateRefs = true
+	autosquash = true
 [gpg]
 	format = ssh
 [commit]
