@@ -42,9 +42,10 @@ type powerline-shell &> /dev/null && PROMPT='$(powerline-shell --shell zsh $?)'
 # zle widgets {{{
 # fg using <C-z> {{{
 fg-bg() {
-	[[ ${#BUFFER} == 0 ]] || return 0
-	BUFFER=" fg"
-	zle accept-line
+	local no_ws=${BUFFER// /}
+	[[ ${#no_ws} -eq 0 ]] || return 0
+	echo
+	fg
 }
 
 zle -N fg-bg # register widget (defaults to executing function with same name)
@@ -57,7 +58,7 @@ then
 		[[ ${BUFFER} ]] && { zle accept-line; return; }
 		echo
 		eza --all --icons --color
-		zle redisplay
+		zle reset-prompt
 	}
 	zle -N ls_on_enter
 	bindkey '^m' ls_on_enter
