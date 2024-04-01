@@ -91,8 +91,8 @@ if type brew &> /dev/null
 then
 	FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 	FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
-	autoload -Uz compinit
-	compinit
 fi
 # }}}
 [[ $(uname) == "Darwin" ]] && ssh-add --apple-load-keychain 2> /dev/null
+autoload -Uz compinit
+compinit
