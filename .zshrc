@@ -103,3 +103,4 @@ autoload -Uz compinit
 compinit
 [[ -r /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [[ -r /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && . /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+true
