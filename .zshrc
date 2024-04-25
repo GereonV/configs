@@ -71,16 +71,6 @@ fi
 # fzf {{{
 if type fzf fd &> /dev/null
 then
-	if [[ -r /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]]
-	then
-		. /opt/homebrew/opt/fzf/shell/key-bindings.zsh
-		. /opt/homebrew/opt/fzf/shell/completion.zsh
-	fi
-	if [[ -r /usr/share/fzf/key-bindings.zsh ]]
-	then
-		. /usr/share/fzf/key-bindings.zsh
-		. /usr/share/fzf/completion.zsh
-	fi
 	export FZF_DEFAULT_COMMAND="fd --unrestricted --follow --exclude .git --exclude node_modules --exclude '*.pyc' . ~ ."
 	export FZF_CTRL_T_COMMAND="fd --unrestricted --follow --strip-cwd-prefix --exclude .git --exclude node_modules --exclude '*.pyc'"
 	export FZF_ALT_C_COMMAND="fd --type d --unrestricted --follow --exclude .git --exclude node_modules --exclude '*.pyc' . ~ ."
@@ -89,6 +79,7 @@ then
 		export FZF_DEFAULT_OPTS="--preview 'bat --color always {} 2> /dev/null || eza --all --tree --icons --color always --group-directories-first {}'"
 	fi
 	export FZF_CTRL_R_OPTS="--preview ''"
+	eval "$(fzf --zsh)"
 fi
 # }}}
 # homebrew {{{
@@ -101,6 +92,7 @@ fi
 [[ $(uname) == "Darwin" ]] && ssh-add --apple-load-keychain 2> /dev/null
 autoload -Uz compinit
 compinit
+zstyle ':completion:*' rehash true
 [[ -r /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [[ -r /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && . /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 true
