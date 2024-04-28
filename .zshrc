@@ -1,7 +1,6 @@
 # vim:foldmethod=marker
 # general {{{
 set -o vi
-setopt HIST_IGNORE_SPACE
 alias top="top -o cpu"
 alias ll="ls -al"
 alias lt="ls -alt"
@@ -11,6 +10,14 @@ alias st="ssh ${TROOM}"
 alias lg="lazygit"
 alias nv="nvim"
 mkcd() { [[ $# -eq 1 ]] && mkdir -p "$1" && cd "$1" }
+# }}}
+# history {{{
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS # alternative: HIST_IGNORE_ALL_DUPS
+setopt SHARE_HISTORY
+export HISTFILE=~/.zsh_history
+export HISTSIZE=10000
+export SAVEHIST=10000
 # }}}
 # prompt {{{
 setopt PROMPT_SUBST
