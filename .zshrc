@@ -8,6 +8,7 @@ alias lt="ls -alt"
 alias ingo="rm -rf"
 alias rl=". ${HOME}/.zshrc"
 alias st="ssh ${TROOM}"
+alias g="git"
 alias lg="lazygit"
 alias nv="nvim"
 mkcd() { [[ $# -eq 1 ]] && mkdir -p "$1" && cd "$1" }

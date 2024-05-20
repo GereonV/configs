@@ -5,9 +5,17 @@
 [core]
 	editor = nvim
 [alias]
+	egc = config --global --edit
 	l = log --all --oneline --graph
-	pushf = push --force-with-lease
 	fa = fetch --all --tags --prune
+	pr = pull --rebase
+	pushf = push --force-with-lease
+	co = checkout
+	s = status -s
+	aa = add --all
+	ci = commit
+	ae = commit --amend
+	ane = commit --amend --no-edit
 [init]
 	defaultBranch = master
 [merge]
