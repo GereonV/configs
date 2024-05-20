@@ -1,6 +1,7 @@
 # vim:foldmethod=marker
 # general {{{
 set -o vi
+setopt extendedglob
 alias top="top -o cpu"
 alias ls="ls --color"
 alias ll="ls -al"
