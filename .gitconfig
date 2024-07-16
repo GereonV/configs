@@ -14,8 +14,12 @@
 	s = status -s
 	aa = add --all
 	ci = commit
+	ca = commit --all
 	ae = commit --amend
 	ane = commit --amend --no-edit
+	wta = worktree add
+	wtr = worktree remove
+	wtl = worktree list
 [init]
 	defaultBranch = master
 [merge]
