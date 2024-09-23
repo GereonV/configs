@@ -3,9 +3,16 @@
 set -o vi
 setopt extendedglob
 alias top="top -o cpu"
-alias ls="ls --color"
-alias ll="ls -al"
-alias lt="ls -alt"
+if type eza &> /dev/null
+then
+	alias ls="eza"
+	alias ll="eza -al --total-size"
+	alias lt="eza -alrs modified --total-size"
+else
+	alias ls="ls --color"
+	alias ll="ls -al"
+	alias lt="ls -alt"
+fi
 alias ingo="rm -rf"
 alias rl=". ${HOME}/.zshrc"
 alias st="ssh ${TROOM}"
@@ -13,6 +20,7 @@ alias g="git"
 alias lg="lazygit"
 alias nv="nvim"
 mkcd() { [[ $# -eq 1 ]] && mkdir -p "$1" && cd "$1" }
+export VISUAL=nvim
 # }}}
 # history {{{
 setopt HIST_IGNORE_SPACE
@@ -152,4 +160,4 @@ autoload -Uz compinit && compinit
 type zinit > /dev/null && zinit cdreplay -q
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || . ~/.p10k.zsh
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
