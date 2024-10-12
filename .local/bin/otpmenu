@@ -3,6 +3,6 @@
 mapfile -t password_files < <(pass grep otpauth | sed "s,\x1B\[[0-9;]*m,,g" | awk 'NR % 2 == 1')
 password_files=( "${password_files[@]%:}" )
 
-password=$(printf '%s\n' "${password_files[@]}" | dmenu -i -p pass -l 5)
+password=$(printf '%s\n' "${password_files[@]}" | dmenu -i -p "pass otp" -l 5)
 [[ ${password} ]] || exit
 pass otp code -c "${password}"
