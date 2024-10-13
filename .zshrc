@@ -15,7 +15,6 @@ else
 fi
 alias ingo="rm -rf"
 alias rl=". ${HOME}/.zshrc"
-alias st="ssh ${TROOM}"
 alias g="git"
 alias lg="lazygit"
 alias nv="nvim"

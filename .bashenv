@@ -1,0 +1,2 @@
+# for pass-otp hotp (https://github.com/tadfisher/pass-otp/pull/172)
+shopt -u patsub_replacement
