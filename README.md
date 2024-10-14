@@ -40,3 +40,15 @@ sudo pacman -S git openssh bash
 | ssh             | openssh                                                          |                                   |
 | vim             | vim                                                              |                                   |
 | zsh             | zsh                                                              | re-login required for full effect |
+
+## Monitor setup
+
+Create an executable script `~/.screenlayout/autoxrandr.sh`,
+which issues the appropriate `xrandr`-call.
+Eg. the i3-config auto-executes this.
+
+Your can use the `arandr` utility:
+```sh
+sudo pacman -S arandr
+```
+You may want to adjust the refresh-rates manually or disable vsync.
