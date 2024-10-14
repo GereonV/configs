@@ -118,7 +118,6 @@ type powerline-shell &> /dev/null && PROMPT='$(powerline-shell --shell zsh $?)'
 # homebrew {{{
 if type brew &> /dev/null
 then
-	# eval "$(brew shellenv)"
 	FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 	FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 fi
@@ -152,11 +151,23 @@ then
 	zinit light zsh-users/zsh-syntax-highlighting
 fi
 # }}}
-[[ $(uname) == "Darwin" ]] && ssh-add --apple-load-keychain 2> /dev/null
+# completions {{{
+# custom {{{
+FPATH="${FPATH}:${HOME}/.zfunc"
+# Rust {{{
+type cargo &> /dev/null && {
+	mkdir -p "${HOME}/.zfunc"
+	[[ -a "${HOME}/.zfunc/_rustup" ]] || rustup completions zsh > "${HOME}/.zfunc/_rustup"
+	[[ -a "${HOME}/.zfunc/_cargo" ]] || rustup completions zsh cargo > "${HOME}/.zfunc/_cargo"
+	[[ -a "${HOME}/.zfunc/_rustc" ]] || curl https://raw.githubusercontent.com/rust-lang/zsh-config/refs/heads/master/_rust > "${HOME}/.zfunc/_rustc"
+}
+# }}}
+# }}}
 zstyle ':completion:*' rehash true
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # color completions
 autoload -Uz compinit && compinit
 type zinit > /dev/null && zinit cdreplay -q
+# }}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
