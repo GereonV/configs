@@ -36,10 +36,11 @@ sudo pacman -S git openssh bash
 | i3              | i3-wm, i3blocks, dmenu, *a terminal* (playerctl, pipewire-pulse) |                                   |
 | nvim            | neovim (*language servers*)                                      |                                   |
 | powerline-shell | [powerline-shell](https://github.com/b-ryan/powerline-shell)     |                                   |
+| paru            | paru (bat)                                                       | run `patch_paru_conf`             |
 | ranger          | ranger                                                           |                                   |
 | ssh             | openssh                                                          |                                   |
 | vim             | vim                                                              |                                   |
-| zsh             | zsh                                                              | re-login required for full effect |
+| zsh             | zsh (bat, eza, fd, fzf)                                          | re-login required for full effect |
 
 ## Monitor setup
 

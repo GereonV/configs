@@ -1,0 +1,14 @@
+#! /usr/bin/env bash
+conf_copy=~/.config/paru/pacman.conf
+cp /etc/pacman.conf "${conf_copy}" || { echo "stow paru first" >&2; exit 1; }
+sed -i "s;# %PARU_PACMAN_CONF%;PacmanConf = ${conf_copy};" ~/.config/paru/paru.conf
+if ! grep -q '^Color' "${conf_copy}"
+then
+	if grep -q '^#Color' "${conf_copy}"
+	then
+		sed -i 's/^#Color/Color/' "${conf_copy}"
+	else
+		echo "Why did you remove '#Color' from '/etc/pacman.conf'???" >&2
+		echo "Patch '${conf_copy}' to include 'Color' manually for nicer reviews!" >&2
+	fi
+fi
