@@ -40,7 +40,7 @@ sudo pacman -S git openssh bash
 | ranger          | ranger                                                           |                                   |
 | ssh             | openssh                                                          |                                   |
 | vim             | vim                                                              |                                   |
-| zsh             | zsh (bat, eza, fd, fzf)                                          | re-login required for full effect |
+| zsh             | zsh, zsh-syntax-highlighting (bat, eza, fd, fzf)                 | re-login required for full effect |
 
 ## Monitor setup
 
