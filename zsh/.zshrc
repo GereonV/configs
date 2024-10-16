@@ -5,13 +5,14 @@ setopt extendedglob
 alias top="top -o cpu"
 if type eza &> /dev/null
 then
-	alias ls="eza"
-	alias ll="eza -al --total-size"
-	alias lt="eza -alrs modified --total-size"
+	export EZA_ICONS_AUTO= # like an implicit --icons=auto
+	alias ls="eza --classify --hyperlink"
+	alias ll="eza --classify --hyperlink --all --long --header --total-size --mounts --git --git-repos"
+	alias lt="eza --classify --hyperlink --all --long --header --total-size --mounts --git --git-repos --sort=modified --reverse"
 else
-	alias ls="ls --color"
-	alias ll="ls -al"
-	alias lt="ls -alt"
+	alias ls="ls --color=auto --hyperlink=auto"
+	alias ll="ls --almost-all --si -l"
+	alias lt="ls --almost-all --si -l --time=modification"
 fi
 alias ingo="rm -rf"
 alias rl=". ${HOME}/.zshrc"
@@ -43,19 +44,17 @@ fg-bg() {
 zle -N fg-bg # register widget (defaults to executing function with same name)
 bindkey '^z' fg-bg # bind widget
 # }}}
-# eza when changing dir or pressing enter {{{
-if type eza &> /dev/null
-then
-	ls_on_enter() {
-		[[ ${BUFFER} ]] || BUFFER=" eza --all --icons --color"
-		zle accept-line
-	}
-	zle -N ls_on_enter
-	bindkey '^m' ls_on_enter
+# eza/ls when changing dir or pressing enter {{{
+ls_on_enter() {
+	[[ ${BUFFER} ]] || BUFFER=" ls --all"
+	zle accept-line
+}
+zle -N ls_on_enter
+bindkey '^m' ls_on_enter
 
-	ls_on_cd() { eza --icons --color; }
-	chpwd_functions=(ls_on_cd)
-fi
+# must be a function
+ls_on_cd() { ls; }
+chpwd_functions=(ls_on_cd)
 # }}}
 # }}}
 # fzf {{{
@@ -66,7 +65,7 @@ then
 	export FZF_ALT_C_COMMAND="fd --type d --unrestricted --follow --exclude .git --exclude node_modules --exclude '*.pyc' . ~ ."
 	if type bat eza > /dev/null
 	then
-		export FZF_CTRL_T_OPTS="--preview 'bat --color always {} 2> /dev/null || eza --all --tree --icons --color always --group-directories-first {}'"
+		export FZF_CTRL_T_OPTS="--preview 'bat --color always {} 2> /dev/null || eza --color=always --icons=always --classify --hyperlink --all --mounts --tree --level=1 --group-directories-first {}'"
 		export FZF_COMPLETION_OPTS=
 	fi
 	_fzf_compgen_path() {
@@ -79,7 +78,7 @@ then
 		local command=$1
 		shift
 		case "${command}" in
-			cd) type eza > /dev/null && fzf --preview "eza --all --tree --icons --color always --group-directories-first" "$@" || fzf "$@";;
+			cd) type eza > /dev/null && fzf --preview "eza --color=always --icons=always --all --mounts -1 --group-directories-first" "$@" || fzf "$@";;
 			export|unset|unalias)       fzf "$@";;
 			ssh|telnet)                 fzf --preview "dig {}" "$@";;
 			*)                          fzf "$@";;
@@ -140,7 +139,7 @@ then
 		zstyle ':completion:*:git-checkout:*' sort false
 		zstyle ':completion:*:descriptions' format '[%d]' # enables groups
 		zstyle ':fzf-tab:*' switch-group '<' '>' # default is F1 and F2
-		zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --all -1 --icons --color always --group-directories-first ${realpath}'
+		zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --color=always --icons=always --all -1 --mounts --group-directories-first ${realpath}'
 	fi
 	zinit light zsh-users/zsh-completions # additional, non-standard completions
 	zinit light zsh-users/zsh-autosuggestions # complete whole command
