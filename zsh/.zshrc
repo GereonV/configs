@@ -1,6 +1,10 @@
 # general {{{
 set -o vi
-setopt extendedglob
+setopt auto_cd # change to directory without `cd`
+setopt extended_glob # enable patterns with `^` and `#` and unambiguous glob-qualifiers
+setopt magic_equal_subst # do filename substitution on `stuff --dir=~/output`
+autoload zmv # mass renaming eg. `zmv 'file(<1-5>).(*)' '$1/file.$2'`
+alias zcp='zmv -C' zln='zmv -L' # likewise, but for copying/linking
 alias top="top -o cpu"
 if type eza &> /dev/null
 then

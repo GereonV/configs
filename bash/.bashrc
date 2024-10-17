@@ -1,4 +1,8 @@
 set -o vi
+shopt -s extglob # eg. ksh-style globbing
+shopt -s globstar # ** recurses directories
+shopt -s failglob # glob not matching anything is an error
+shopt -s autocd # change to directory without `cd`
 export PS1='[\u@\h \W]\$ '
 type powerline-shell &> /dev/null && PROMPT_COMMAND='PS1=$(powerline-shell $?)'
 
