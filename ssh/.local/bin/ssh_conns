@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
 for_ssh_socket_paths() {
-	# see .ssh/config: `ConrolPath ~/.ssh/.controlpath_%r@%h:%p`
-	declare -r ssh_control_path_prefix=~/.ssh/.controlpath_
-	local socket_path socket_paths
 	if [[ -v BASH ]]
 	then
 		local - # shopt is local to function
@@ -15,23 +12,33 @@ for_ssh_socket_paths() {
 		echo "only bash and zsh supported" >&2
 		exit 1
 	fi
-	socket_paths=("${ssh_control_path_prefix}"*)
-	for socket_path in "${socket_paths[@]}"
+	# see .ssh/config: `ConrolPath ~/.ssh/.control_sockets/%r@%h:%p`
+	declare -r \
+		ssh_control_path_prefix=~/.ssh/.control_sockets/ \
+		ssh_control_path_regex="^${HOME}/\.ssh/\.control_sockets/([^@]+@[^:]+:[[:digit:]]+)$"
+	local socket_path ret=1
+	for socket_path in "${ssh_control_path_prefix}"*
 	do
-		[[ "${socket_path}" =~ ^${HOME}/\.ssh/\.controlpath_([^@]+@[^:]+:[[:digit:]]+)$ ]] || continue
+		[[ "${socket_path}" =~ ${ssh_control_path_regex} ]] || continue
 		if [[ -S "${socket_path}" ]]
 		then
-			"$@" "${BASH_REMATCH[1]}" "${socket_path}"
+			"$@" "${BASH_REMATCH[1]}" "${socket_path}" && ret=0
 		else
 			echo "not a socket: ${socket_path}" >&2
 		fi
 	done
-	((${#socket_paths}))
+	return ${ret}
 }
 
 control_ssh_master_process() {
-	echo -n "$2: "
-	ssh -S "$3" -O "$1" ""
+	[[ -z "$2" || "$3" =~ $2 ]] || return
+	echo -n "$3: "
+	ssh -S "$4" -O "$1" ""
+}
+
+print_ssh_master_process() {
+	[[ -z "$1" || "$2" =~ $1 ]] || return
+	echo "$2 ($3)"
 }
 
 # “check” (check that the master process is running)
@@ -40,7 +47,7 @@ control_ssh_master_process() {
 # “exit” (request the master to exit)
 # “stop” (request the master to stop accepting further multiplexing requests)
 declare -r prog_name=$(basename "$0")
-declare -ra cmds=(check forward cancel exit stop)
+declare -ra cmds=("check [<pattern>]" "forward <pattern> [<forward_option> ...]" "cancel <pattern> [<forward_option> ...]" "exit [<pattern>]" "stop [<pattern>]" "list [<pattern>]")
 usage() {
 	local cmd
 	for cmd in "${cmds[@]}"
@@ -49,11 +56,33 @@ usage() {
 	done
 	exit 1
 }
-[[ $# -eq 1 ]] || usage
+(($#)) || usage
 case "$1" in
-	check|forward|cancel|exit|stop)
-		for_ssh_socket_paths control_ssh_master_process "$1" ||
+	check|exit|stop)
+		(($# <= 2)) || usage
+		for_ssh_socket_paths control_ssh_master_process "$1" "$2" ||
 		echo "no active ssh master processes found" >& 2
+		;;
+	forward|cancel)
+		(($# >= 2)) || usage
+		matches=$(for_ssh_socket_paths print_ssh_master_process "$2") || {
+			echo "no matches" >&2
+			exit 1
+		}
+		if [[ $(wc -l <<< "${matches}") -ne 1 ]]
+		then
+			names=($(sed "s;^\([^ ]*\).*$;\1;g" <<< "${matches}"))
+			echo "possible matches: ${names[*]}" >&2
+			exit 1
+		fi
+		ctl_cmd=$1
+		shift 2
+		file=$(sed "s;^[^ ]* (\(.*\))$;\1;g" <<< "${matches}")
+		ssh -S "${file}" -O "${ctl_cmd}" "$@" ""
+		;;
+	list)
+		(($# <= 2)) || usage
+		for_ssh_socket_paths print_ssh_master_process "$2"
 		;;
 	*)
 		usage
