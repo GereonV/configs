@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+for_ssh_socket_paths() {
+	# see .ssh/config: `ConrolPath ~/.ssh/.controlpath_%r@%h:%p`
+	declare -r ssh_control_path_prefix=~/.ssh/.controlpath_
+	local socket_path socket_paths
+	if [[ -v BASH ]]
+	then
+		local - # shopt is local to function
+		shopt -s nullglob
+	elif [[ -v ZSH_NAME ]]
+	then
+		setopt local_options bashrematch nullglob
+	else
+		echo "only bash and zsh supported" >&2
+		exit 1
+	fi
+	socket_paths=("${ssh_control_path_prefix}"*)
+	for socket_path in "${socket_paths[@]}"
+	do
+		[[ "${socket_path}" =~ ^${HOME}/\.ssh/\.controlpath_([^@]+@[^:]+:[[:digit:]]+)$ ]] || continue
+		if [[ -S "${socket_path}" ]]
+		then
+			"$@" "${BASH_REMATCH[1]}" "${socket_path}"
+		else
+			echo "not a socket: ${socket_path}" >&2
+		fi
+	done
+	((${#socket_paths}))
+}
+
+control_ssh_master_process() {
+	echo -n "$2: "
+	ssh -S "$3" -O "$1" ""
+}
+
+# “check” (check that the master process is running)
+# “forward” (request forwardings without command execution)
+# “cancel” (cancel forwardings)
+# “exit” (request the master to exit)
+# “stop” (request the master to stop accepting further multiplexing requests)
+declare -r prog_name=$(basename "$0")
+declare -ra cmds=(check forward cancel exit stop)
+usage() {
+	local cmd
+	for cmd in "${cmds[@]}"
+	do
+		printf "usage: ${prog_name} %s\n" "${cmd}" >&2
+	done
+	exit 1
+}
+[[ $# -eq 1 ]] || usage
+case "$1" in
+	check|forward|cancel|exit|stop)
+		for_ssh_socket_paths control_ssh_master_process "$1" ||
+		echo "no active ssh master processes found" >& 2
+		;;
+	*)
+		usage
+		;;
+esac
