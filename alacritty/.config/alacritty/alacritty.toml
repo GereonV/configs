@@ -1,8 +1,9 @@
+[general]
 import = [
 	"~/.config/alacritty/themes/themes/dracula.toml"
 ]
 
-[shell]
+[terminal.shell]
 program = "/usr/bin/zsh"
 
 [window]
