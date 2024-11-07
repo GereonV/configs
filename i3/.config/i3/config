@@ -183,7 +183,8 @@ bindsym $mod+minus scratchpad show
 
 # exec "setxkbmap de"
 exec --no-startup-id "picom -b"
-exec --no-startup-id "~/.screenlayout/autoxrandr.sh && xwallpaper --zoom ~/Pictures/archbtw.png"
+exec --no-startup-id "~/.screenlayout/autoxrandr.sh"
+exec --no-startup-id "xwallpaper --zoom ~/Pictures/archbtw.png"
 bindsym $mod+n move workspace to output left
 bindsym $mod+m move workspace to output right
 
