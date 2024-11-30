@@ -260,6 +260,7 @@ vim.keymap.set("n", "<Leader>ft", builtin.builtin)
 -- LSP {{{
 local lspconfig = require("lspconfig")
 local lsp_opts = { capabilities = require("cmp_nvim_lsp").default_capabilities() }
+local pylsp_opts = { capabilities = lsp_opts.capabilities, settings = { pylsp = { plugins = { rope_autoimport = { enabled = true } } } } }
 -- register servers {{{
 require("neodev").setup {} -- ABOVE! lspconfig
 lspconfig.clangd.setup(lsp_opts)
@@ -270,7 +271,8 @@ lspconfig.hls.setup(lsp_opts)
 lspconfig.zls.setup(lsp_opts)
 lspconfig.bashls.setup(lsp_opts)
 lspconfig.jdtls.setup(lsp_opts)
-lspconfig.pylsp.setup(lsp_opts)
+lspconfig.pylsp.setup(pylsp_opts)
+lspconfig.dockerls.setup(lsp_opts)
 -- }}}
 -- mappings {{{
 vim.api.nvim_create_autocmd("LspAttach", {

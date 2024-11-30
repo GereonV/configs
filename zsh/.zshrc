@@ -23,6 +23,19 @@ alias g="git"
 alias lg="lazygit"
 alias nv="nvim"
 mkcd() { [[ $# -eq 1 ]] && mkdir -p "$1" && cd "$1" }
+add-venv-path() {
+	local dir
+	for dir in .venv venv
+	do
+		[[ -d "${dir}" ]] || continue
+		. ${dir}/bin/activate || return
+		dir=("${dir}"/lib/python3.*/site-packages) && [[ $#dir -eq 1 ]] || return
+		export PYTHONPATH="${dir}${PYTHONPATH+:${PYTHONPATH}}"
+		return
+	done
+	echo "no venv found" >&2
+	return 1
+}
 export VISUAL=nvim
 # }}}
 # history {{{
