@@ -43,8 +43,8 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_FIND_NO_DUPS # alternative: HIST_IGNORE_ALL_DUPS
 setopt SHARE_HISTORY
 export HISTFILE=~/.zsh_history
-export HISTSIZE=10000
-export SAVEHIST=10000
+export HISTSIZE=100000
+export SAVEHIST=100000
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 # }}}
