@@ -273,6 +273,8 @@ lspconfig.bashls.setup(lsp_opts)
 lspconfig.jdtls.setup(lsp_opts)
 lspconfig.pylsp.setup(pylsp_opts)
 lspconfig.dockerls.setup(lsp_opts)
+lspconfig.ts_ls.setup(lsp_opts)
+lspconfig.gopls.setup(lsp_opts)
 -- }}}
 -- mappings {{{
 vim.api.nvim_create_autocmd("LspAttach", {
