@@ -17,6 +17,7 @@
 	ca = commit --all
 	ae = commit --amend
 	ane = commit --amend --no-edit
+	rb = rebase -i
 	wta = worktree add
 	wtr = worktree remove
 	wtl = worktree list
