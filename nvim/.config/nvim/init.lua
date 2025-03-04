@@ -260,7 +260,16 @@ vim.keymap.set("n", "<Leader>ft", builtin.builtin)
 -- LSP {{{
 local lspconfig = require("lspconfig")
 local lsp_opts = { capabilities = require("cmp_nvim_lsp").default_capabilities() }
-local pylsp_opts = { capabilities = lsp_opts.capabilities, settings = { pylsp = { plugins = { rope_autoimport = { enabled = true } } } } }
+local pylsp_opts = { capabilities = lsp_opts.capabilities, settings = { pylsp = {
+  confiurationSources = {"flake8"},
+  plugins = {
+    rope_autoimport = { enabled = true },
+    pycodestyle = { enabled = false },
+    pyflakes = { enabled = false },
+    mccabe = { enabled = false },
+    flake8 = { enabled = true },
+  }
+} } }
 -- register servers {{{
 require("neodev").setup {} -- ABOVE! lspconfig
 lspconfig.clangd.setup(lsp_opts)
