@@ -21,6 +21,7 @@
 	wta = worktree add
 	wtr = worktree remove
 	wtl = worktree list
+	sm = submodule
 [init]
 	defaultBranch = master
 [merge]
@@ -32,3 +33,7 @@
 	format = ssh
 [commit]
 	gpgsign = true
+[submodule]
+	# always pull with `--recurse-submodules` (but not clone)
+	# this acts as if you run `git submodule update --init --recursive` after each pull
+	recurse = true
