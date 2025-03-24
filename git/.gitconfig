@@ -37,3 +37,5 @@
 	# always pull with `--recurse-submodules` (but not clone)
 	# this acts as if you run `git submodule update --init --recursive` after each pull
 	recurse = true
+[push]
+	recurseSubmodules = check
