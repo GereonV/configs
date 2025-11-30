@@ -38,4 +38,7 @@
 	# this acts as if you run `git submodule update --init --recursive` after each pull
 	recurse = true
 [push]
+	default = upstream
 	recurseSubmodules = check
+[diff]
+	submodule = log
