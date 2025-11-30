@@ -270,6 +270,20 @@ local pylsp_opts = { capabilities = lsp_opts.capabilities, settings = { pylsp = 
     flake8 = { enabled = true },
   }
 } } }
+-- diagnostics displaying {{{
+vim.diagnostic.config({
+  underline = { severity = { min = "WARN" } },
+  virtual_text = {
+    source = "if_many",
+    prefix = "●",
+  },
+  float = {
+    severity_sort = true,
+    source = true,
+  },
+  severity_sort = true,
+})
+-- }}}
 -- register servers {{{
 require("neodev").setup {} -- ABOVE! lspconfig
 lspconfig.clangd.setup(lsp_opts)
@@ -296,6 +310,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
     vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    vim.keymap.set("n", "L", vim.diagnostic.open_float, opts)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
     vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
     vim.keymap.set("n", "<Space>wa", vim.lsp.buf.add_workspace_folder, opts)
