@@ -44,7 +44,7 @@ Purely best-effort with references checked on 2025-11-30.
 1. If not using ethernet [connect to the internet](https://wiki.archlinux.org/title/Installation_guide#Connect_to_the_internet) in the desired way
 1. Partition the disk you want to install Arch on (eg. using `fdisk` or the TUI `cfdisk`):
     - *EFI System Partition* can be tiny (a few MiB) but for dual-boot setups or just to be safe use ~512 MiB
-    - **Optional:** *Linux swap* should be at least 4 MiB to be effective, usually half of the system's memory is good
+    - **Optional:** *Linux swap* should be at least 4 GiB to be effective, usually half of the system's memory is good
         - This is not needed if you intend to use a [swap file](https://wiki.archlinux.org/title/Swap#Swap_file) or [`zram`](https://wiki.archlinux.org/title/Zram)
     - *Linux root x86-64* corresponds to the root of the filesystem and should be sized accordingly
         - If other partitions will be mounted to store data, this doesn't need to be as large
@@ -53,7 +53,7 @@ Purely best-effort with references checked on 2025-11-30.
     - Swap area for the swap partition: `mkswap /dev/...`
     - Anything you want for the root partition: eg. `mkfs.ext4 /dev/...` for EXT4
 1. **Optional:** Use [`reflector`](https://wiki.archlinux.org/title/Reflector) to fetch an optimized list of package mirror servers
-    - `/etc/pacman.d/mirrorlist` will be copied over by to the new installation by `pacstrap`
+    - `/etc/pacman.d/mirrorlist` will be copied over to the new installation by `pacstrap`
 1. Mount the filesystem of the new installation somewhere so `genfstab` can be used later on.\
    Example:
 
@@ -117,17 +117,23 @@ Purely best-effort with references checked on 2025-11-30.
 
    ```
    KEYMAP=de-latin1
-   FONT=ter-132b
+   FONT=eurlatgr
    ```
 1. **Optional but recommeded:** Set the local hostname in `/etc/hostname`
     - Other devices can resolve your hostname out-of-the-box using mDNS or [Samba](https://wiki.archlinux.org/title/Samba) if you set it up
-1. Finish network setup (eg. reconnect to Wi-Fi or run `systemctl enable NetworkManager`)
+1. Finish network setup (eg. reconnect to Wi-Fi or run `systemctl enable NetworkManager`).\
+   Example of wired internet using `systemd`:
+
+   ```bash
+   systemctl enable systemd-networkd.service systemd-resolved.service
+   ln -sf /usr/lib/systemd/network/89-ethernet.network.example /etc/systemd/network/89-ethernet.network
+   ```
 1. Set the root password using `passwd`
 1. Install a boot loader according to your requirements.\
    Example using GRUB:
 
    ```bash
-   pacman -S grub efibootmgr>\
+   pacman -S grub efibootmgr
    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
    grub-mkconfig -o /boot/grub/grub.cfg
    ```
