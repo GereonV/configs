@@ -174,7 +174,10 @@ require("lazy").setup {
       { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
     },
   },
-  "folke/neodev.nvim",                               -- LSP setup for nvim config
+  {
+    "folke/lazydev.nvim",                            -- LSP setup for nvim config
+    ft = "lua",
+  },
   "neovim/nvim-lspconfig",                           -- LSP defaults
   {
     "nvim-lualine/lualine.nvim",                     -- statusline
@@ -258,18 +261,22 @@ vim.keymap.set("n", "<Leader>fm", builtin.man_pages)
 vim.keymap.set("n", "<Leader>ft", builtin.builtin)
 -- }}}
 -- LSP {{{
-local lspconfig = require("lspconfig")
 local lsp_opts = { capabilities = require("cmp_nvim_lsp").default_capabilities() }
-local pylsp_opts = { capabilities = lsp_opts.capabilities, settings = { pylsp = {
-  confiurationSources = {"flake8"},
-  plugins = {
-    rope_autoimport = { enabled = true },
-    pycodestyle = { enabled = false },
-    pyflakes = { enabled = false },
-    mccabe = { enabled = false },
-    flake8 = { enabled = true },
+local pylsp_opts = {
+  capabilities = lsp_opts.capabilities,
+  settings = {
+    pylsp = {
+      confiurationSources = { "flake8" },
+      plugins = {
+        rope_autoimport = { enabled = true },
+        pycodestyle = { enabled = false },
+        pyflakes = { enabled = false },
+        mccabe = { enabled = false },
+        flake8 = { enabled = true },
+      }
+    }
   }
-} } }
+}
 -- diagnostics displaying {{{
 vim.diagnostic.config({
   underline = { severity = { min = "WARN" } },
@@ -285,19 +292,21 @@ vim.diagnostic.config({
 })
 -- }}}
 -- register servers {{{
-require("neodev").setup {} -- ABOVE! lspconfig
-lspconfig.clangd.setup(lsp_opts)
-lspconfig.rust_analyzer.setup(lsp_opts)
-lspconfig.lua_ls.setup(lsp_opts)
-lspconfig.texlab.setup(lsp_opts)
-lspconfig.hls.setup(lsp_opts)
-lspconfig.zls.setup(lsp_opts)
-lspconfig.bashls.setup(lsp_opts)
-lspconfig.jdtls.setup(lsp_opts)
-lspconfig.pylsp.setup(pylsp_opts)
-lspconfig.dockerls.setup(lsp_opts)
-lspconfig.ts_ls.setup(lsp_opts)
-lspconfig.gopls.setup(lsp_opts)
+require("lazydev").setup {}
+vim.lsp.config("clangd", lsp_opts)
+vim.lsp.config("rust_analyzer", lsp_opts)
+vim.lsp.config("lua_ls", lsp_opts)
+vim.lsp.config("texlab", lsp_opts)
+vim.lsp.config("hls", lsp_opts)
+vim.lsp.config("zls", lsp_opts)
+vim.lsp.config("bashls", lsp_opts)
+vim.lsp.config("jdtls", lsp_opts)
+vim.lsp.config("pylsp", pylsp_opts)
+vim.lsp.config("dockerls", lsp_opts)
+vim.lsp.config("ts_ls", lsp_opts)
+vim.lsp.config("gopls", lsp_opts)
+vim.lsp.enable({ "clangd", "rust_analyzer", "lua_ls", "texlab", "hls", "zls", "bashls", "jdtls", "pylsp", "dockerls",
+  "ts_ls", "gopls" })
 -- }}}
 -- mappings {{{
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -376,6 +385,7 @@ cmp.setup {
     { name = "vsnip" },
     { name = "nvim_lsp" },
     { name = "path" },
+    { name = "lazydev" },
   },
 }
 -- }}}
