@@ -1,0 +1,167 @@
+{
+	"position": "top",
+	"modules-left": [
+		"hyprland/workspaces",
+		"hyprland/window"
+	],
+	"modules-center": [
+		"temperature",
+		"cpu",
+		"memory",
+		"network",
+		"disk",
+		"bluetooth"
+	],
+	"modules-right": [
+		"systemd-failed-units",
+		"privacy",
+		"mpris",
+		"pulseaudio/slider",
+		"pulseaudio",
+		"tray",
+		"clock"
+	],
+	"margin": 6,
+	"spacing": 20,
+	"reload_style_on_change": true,
+
+	"hyprland/workspaces": {
+		"format": "{name} {windows}",
+		"format-window-separator": "",
+		"show-special": true,
+		"special-visible-only": true,
+		// "workspace-taskbar": {
+		// 	"enable": true,
+		// 	"update-active-window": true
+		// },
+		"window-rewrite": {
+			"title<.*youtube.*>": " ",
+			"class<firefox>": " ",
+			"class<firefox> title<.*github.*>": " ",
+			"class<kitty>": "",
+			"class<kitty> title<nv .*>": " ",
+			"class<discord>": " "
+		},
+		"window-rewrite-default": " ",
+		"format-window-separator": " ",
+		"move-to-monitor": true
+	},
+	"hyprland/window": {
+		"separate-outputs": true,
+		"icon": true
+	},
+
+	"temperature": {
+		"hwmon-path": "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp1_input",
+		"warning-threshold": 65,
+		"critical-threshold": 85,
+		"tooltip": false
+	},
+	"cpu": {
+		"interval": 2,
+		"format": "{usage}% @ {avg_frequency} GHz {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}{icon8}{icon9}{icon10}{icon11}",
+		"format-icons": [
+			"<span color='#69ff94'>▁</span>", // green
+			"<span color='#2aa9ff'>▂</span>", // blue
+			"<span color='#f8f8f2'>▃</span>", // white
+			"<span color='#f8f8f2'>▄</span>", // white
+			"<span color='#ffffa5'>▅</span>", // yellow
+			"<span color='#ffffa5'>▆</span>", // yellow
+			"<span color='#ff9977'>▇</span>", // orange
+			"<span color='#dd532e'>█</span>"  // red
+		]
+	},
+	"memory": {
+		"interval": 2,
+		"format": "{percentage}% ({swapPercentage}%)",
+		"states": {
+			"warning": 50,
+			"critical": 80
+		},
+		"tooltip-format": "RAM: {used} GiB / {total} GiB\nSwap: {swapUsed} GiB / {swapTotal} GiB"
+	},
+	"network": {
+		"interval": 5,
+		"family": "ipv4_6",
+		"format-ethernet": "  {bandwidthTotalBytes}",
+		"format-wifi": "  {essid} ({signalStrength}%)",
+		"format-disconnected": "",
+		"format-icons": [
+		],
+		"tooltip-format": " {bandwidthUpBytes}\t {bandwidthDownBytes}\nGateway: {gwaddr}\nIPv4 mask: {netmask}/{cidr}\nIPv6 mask: {netmask6}/{cidr6}\nIPs:\n{ipaddr}"
+	},
+	"disk": {
+		"format": "{percentage_used}%",
+		"states": {
+			"warning": 70,
+			"critical": 90
+		},
+		"tooltip-format": "{used} / {total} "
+	},
+	"bluetooth": {
+		"format": " {status}",
+		"format-connected": "󰂱 {num_connections} {device_alias}",
+		"format-connected-battery": "󰂱 {num_connections} {device_alias} {device_battery_percentage}",
+		"format-no-controller": "",
+		"tooltip-format": "{controller_alias}\t{controller_address}",
+		"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+		"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+		"tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}"
+	},
+
+	"systemd-failed-units": {
+		"format": "failed: {nr_failed_system} system + {nr_failed_user} user"
+	},
+	"mpris": {
+		// 🎵
+		"inteval": 1,
+		"format": "{status_icon} {dynamic}",
+		"tooltip-format": "{player}",
+		"status-icons": {
+			"playing": "",
+			"paused": "",
+			"stopped": ""
+		}
+	},
+	"pulseaudio": {
+		"format": "{volume}% {icon}",
+		"format-icons": {
+			"default": [" ", " "],
+			"default-muted": " ",
+			"headphone": " ",
+			"headphone-muted": "󰟎 ",
+			"speaker": "󰓃",
+			"speaker-muted": "󰓄 ",
+			"hdmi": "󰽟 ",
+			"hdmi-muted": "󰽠 ",
+			// "headset": " ",
+			// "headset-muted": "󰋐 ",
+			"portable": " ",
+			"portable-muted": " ",
+			"car": "",
+			"phone": " ",
+			"phone-muted": " "
+		}
+	},
+	"clock": {
+		"interval": 1,
+		"format": "<tt>{:%A %F %T %Z}</tt>",
+		"tooltip-format": "<tt>{calendar}</tt>",
+		"calendar": {
+			"mode-mon-col": 3,
+			"weeks-pos": "left",
+			"format": {
+				"months": "<b>{}</b>",
+				"weeks": "<span color='#99ffdd'><b>{}</b></span>", // green-cyan
+				"weekdays": "<span color='#ffcc66'><b>{}</b></span>", // yellow
+				"today": "<span color='#2aa9ff'><b><u>{}</u></b></span>" // blue
+			}
+		},
+		"actions": {
+			"on-click": "shift_reset",
+			"on-click-right": "mode",
+			"on-scroll-up": "shift_down",
+			"on-scroll-down": "shift_up"
+		}
+	}
+}

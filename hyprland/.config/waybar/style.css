@@ -1,0 +1,117 @@
+/* #workspaces */
+/* #workspaces button */
+/* #workspaces button.active */
+/* #workspaces button.empty */
+/* #workspaces button.persistent */
+/* #workspaces button.special */
+/* #workspaces button.visible */
+/* #workspaces button.urgent */
+/* Gets applied if workspace-monitor == waybar-monitor */
+/* #workspaces button.hosting-monitor */
+/* #workspaces .workspace-label */
+/* Only if `workspace-taskbar.enable` is `true` */
+/* #workspaces .taskbar-window */
+/* Only if `workspace-taskbar.enable` and `workspace-taskbar.update-active-window` is `true` */
+/* #workspaces .taskbar-window.active */
+
+/* #windowcount */
+/* When no windows are in the workspace */
+/* window#waybar.empty #windowcount */
+/* When there is a fullscreen window in the workspace; useful with Hyprland's fullscreen, 1 mode */
+/* window#waybar.fullscreen #windowcount */
+
+/* #window */
+/* When no windows are in the workspace */
+/* window#waybar.empty */
+/* When one tiled window is visible in the workspace (floating windows may be present) */
+/* window#waybar.solo */
+/* Where <app_id> is the class (e.g. chromium) of the solo tiled window in the workspace (use hyprctl clients to see classes) */
+/* window#waybar.<app_id> */
+/* When there are only floating windows visible in the workspace */
+/* window#waybar.floating */
+/* When there is a fullscreen window in the workspace; useful with Hyprland's fullscreen, 1 mode */
+/* window#waybar.fullscreen */
+/* When there are hidden windows in the workspace; usually occurs due to window swallowing */
+/* window#waybar.swallowing */
+
+
+/* #temperature */
+/* #temperature.warning */
+/* #temperature.critical */
+
+/* #cpu */
+
+/* #memory */
+/* #memory.warning */
+/* #memory.critical */
+
+/* #network */
+/* #network.disabled */
+/* #network.disconnected */
+/* #network.linked */
+/* #network.ethernet */
+/* #network.wifi */
+
+/* #disk */
+/* #disk.warning */
+/* #disk.critical */
+
+/* #bluetooth */
+/* #bluetooth.disabled */
+/* #bluetooth.off */
+/* #bluetooth.on */
+/* #bluetooth.connected */
+/* #bluetooth.discoverable */
+/* #bluetooth.discovering */
+/* #bluetooth.pairable */
+/* #bluetooth.no-controller */
+
+
+/* #systemd-failed-units */
+/* #systemd-failed-units.ok */
+/* #systemd-failed-units.degraded */
+
+/* #privacy */
+/* #privacy-item */
+/* #privacy-item.screenshare */
+/* #privacy-item.audio-in */
+/* #privacy-item.audio-out */
+
+/* #mpris */
+/* #mpris.${status} */
+/* #mpris.${player} */
+
+/* Controls the style of the box around the slider and bar */
+/* #pulseaudio-slider */
+/* Controls the style of the slider handle */
+/* #pulseaudio-slider slide */
+/* Controls the style of the part of the bar that has not been filled */
+#pulseaudio-slider trough {
+    min-height: 10px;
+    min-width: 80px;
+    border-radius: 5px;
+    background: black;
+}
+/* Controls the style of the part of the bar that has been filled */
+#pulseaudio-slider highlight {
+    min-width: 10px;
+    border-radius: 5px;
+    background: green;
+}
+
+/* #pulseaudio */
+/* #pulseaudio.bluetooth */
+/* #pulseaudio.muted */
+/* #pulseaudio.source-muted */
+
+/* #tray */
+/* for the context menu */
+/* #tray menu */
+/* for icons with status `Passive` */
+/* #tray > .passive */
+/* for icons with status `Active` */
+/* #tray > .active */
+/* for icons with status `NeedsAttention` */
+/* #tray > .needs-attention */
+
+/* #clock */
